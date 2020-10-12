@@ -23,11 +23,11 @@ public class EkiLibApi {
     }
 
     public static boolean deleteStationByName(boolean sensitive, Station... stations) {
-        return deleteProcess(sta -> StationManager.INSTANCE.removeStationByName(sta.getName(), sensitive) ? 1 : 0);
+        return deleteProcess(sta -> StationManager.INSTANCE.removeStationByName(sta.getName(), sensitive) ? 1 : 0, stations);
     }
 
     public static boolean deleteStationsByPosition(Station... stations) {
-        return deleteProcess(sta -> StationManager.INSTANCE.removeStationByPos(sta.getPosition()) ? 1 : 0);
+        return deleteProcess(sta -> StationManager.INSTANCE.removeStationByPos(sta.getPosition()) ? 1 : 0, stations);
     }
 
     public static List<Station> getStationList(int dimensionID) {
@@ -36,6 +36,9 @@ public class EkiLibApi {
                 .collect(Collectors.toList());
     }
 
+    /***
+     * Call this method every time player modifies a station from client side.
+     */
     public static void markDirty() {
         StationManager.INSTANCE.markDirty();
     }

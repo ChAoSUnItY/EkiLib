@@ -45,8 +45,11 @@ public class ScreenModifyStation extends ScreenBase {
         this.addButton(new Button(this.width / 2 - 110, this.height / 2 + 50, 100, 20, new StringTextComponent("Back"),
                 v -> minecraft.displayGuiScreen(new ScreenMenu(this.dimID, this.player))));
         this.buttonCreate = this.addButton(new Button(this.width / 2 + 10, this.height / 2 + 50, 100, 20, new StringTextComponent("Create"),
-                v -> EkiLibApi.addStations(
-                        new Station(this.textFieldStationName.getText(), this.pos, this.textFieldStationOperator.getText(), this.stationLevel, this.dimID))));
+                v -> {
+                    EkiLibApi.addStations(
+                            new Station(this.textFieldStationName.getText(), this.pos, this.textFieldStationOperator.getText(), this.stationLevel, this.dimID));
+                    EkiLibApi.markDirty();
+                }));
         this.addButton(new Button(this.width / 2 + 110, this.height / 2 - 80, 20, 20, new StringTextComponent("<"),
                 v -> this.stationLevel = EnumStationLevel.values[(this.stationLevel.ordinal() - 1 < 0 ? EnumStationLevel.values.length - 1 : this.stationLevel.ordinal() - 1) % EnumStationLevel.values.length]));
         this.addButton(new Button(this.width / 2 + 130, this.height / 2 - 80, 20, 20, new StringTextComponent(">"),
