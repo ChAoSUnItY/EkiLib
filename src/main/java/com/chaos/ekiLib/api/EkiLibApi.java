@@ -1,7 +1,7 @@
 package com.chaos.ekiLib.api;
 
-import com.chaos.ekiLib.station.StationManager;
 import com.chaos.ekiLib.station.data.Station;
+import com.chaos.ekiLib.utils.handlers.StationHandler;
 
 import java.util.List;
 import java.util.function.ToIntFunction;
@@ -11,27 +11,27 @@ import java.util.stream.Stream;
 
 public class EkiLibApi {
     public static void reloadStations(List<Station> stations) {
-        StationManager.INSTANCE.reload(stations);
+        StationHandler.INSTANCE.reload(stations);
     }
 
     public static void addStations(Station... stations) {
-        Stream.of(stations).forEach(StationManager.INSTANCE::addStation);
+        Stream.of(stations).forEach(StationHandler.INSTANCE::addStation);
     }
 
-    public static void replaceStationsByPos(Station... stations) {
-        Stream.of(stations).forEach(StationManager.INSTANCE::replaceStationByPosition);
+    public static void replaceStations(Station... stations) {
+        Stream.of(stations).forEach(StationHandler.INSTANCE::replaceStation);
     }
 
     public static boolean deleteStationByName(boolean sensitive, Station... stations) {
-        return deleteProcess(sta -> StationManager.INSTANCE.removeStationByName(sta.getName(), sensitive) ? 1 : 0, stations);
+        return deleteProcess(sta -> StationHandler.INSTANCE.removeStationByName(sta.getName(), sensitive) ? 1 : 0, stations);
     }
 
     public static boolean deleteStationsByPosition(Station... stations) {
-        return deleteProcess(sta -> StationManager.INSTANCE.removeStationByPos(sta.getPosition()) ? 1 : 0, stations);
+        return deleteProcess(sta -> StationHandler.INSTANCE.removeStationByPos(sta.getPosition()) ? 1 : 0, stations);
     }
 
     public static List<Station> getStationList(int dimensionID) {
-        return StationManager.INSTANCE.getStations().stream()
+        return StationHandler.INSTANCE.getStations().stream()
                 .filter(station -> station.getDimensionID() == dimensionID)
                 .collect(Collectors.toList());
     }
@@ -40,7 +40,7 @@ public class EkiLibApi {
      * Call this method every time player modifies a station from client side.
      */
     public static void markDirty() {
-        StationManager.INSTANCE.markDirty();
+        StationHandler.INSTANCE.markDirty();
     }
 
     private static boolean deleteProcess(ToIntFunction<Station> func, Station... stations) {

@@ -18,15 +18,21 @@ public class PacketHandler {
         int ID = 0;
 
         INSTANCE.registerMessage(ID++,
-                PacketStationChanged.class,
-                PacketStationChanged::encode,
-                PacketStationChanged::decode,
-                PacketStationChanged::handle);
+                PacketNoticeStationChanged.class,
+                PacketNoticeStationChanged::encode,
+                PacketNoticeStationChanged::decode,
+                PacketNoticeStationChanged::handle);
 
         INSTANCE.registerMessage(ID++,
-                PacketStationChanged.PacketRemindStationChanged.class,
-                PacketStationChanged.PacketRemindStationChanged::encode,
-                PacketStationChanged.PacketRemindStationChanged::decode,
-                PacketStationChanged.PacketRemindStationChanged::handle);
+                PacketInitStationHandler.class,
+                PacketInitStationHandler::encode,
+                PacketInitStationHandler::decode,
+                PacketInitStationHandler::handle);
+
+        INSTANCE.registerMessage(ID++,
+                PacketInitStationHandler.PacketReloadStationHandler.class,
+                PacketInitStationHandler.PacketReloadStationHandler::encode,
+                PacketInitStationHandler.PacketReloadStationHandler::decode,
+                PacketInitStationHandler.PacketReloadStationHandler::handle);
     }
 }

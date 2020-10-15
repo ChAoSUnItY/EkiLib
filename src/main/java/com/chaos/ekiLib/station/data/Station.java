@@ -5,21 +5,13 @@ import net.minecraft.util.math.BlockPos;
 public class Station {
     protected String name;
     protected BlockPos position;
-    protected String operator;
     protected EnumStationLevel level;
     protected int dimensionID;
 
-    public Station(String name, BlockPos pos, String op, EnumStationLevel lvl, int dimensionID) {
+    public Station(String name, BlockPos pos, EnumStationLevel lvl, int dimensionID) {
         this.name = name;
         this.position = pos;
-        this.operator = op;
         this.level = lvl;
-        this.dimensionID = dimensionID;
-    }
-
-    public Station(String name, BlockPos position, int dimensionID) {
-        this.name = name;
-        this.position = position;
         this.dimensionID = dimensionID;
     }
 
@@ -39,14 +31,6 @@ public class Station {
         return String.format("(%d, %d, %d)", position.getX(), position.getY(), position.getZ());
     }
 
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
     public EnumStationLevel getLevel() {
         return level;
     }
@@ -60,7 +44,7 @@ public class Station {
     }
 
     public boolean hasNull() {
-        return name == null || position == null || operator == null || level == null;
+        return name == null || position == null || level == null;
     }
 
     public boolean equalsByName(Station station, boolean sensitive) {

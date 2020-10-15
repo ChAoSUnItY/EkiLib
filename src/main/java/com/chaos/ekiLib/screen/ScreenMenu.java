@@ -26,16 +26,24 @@ public class ScreenMenu extends ScreenBase {
 
     @Override
     protected void init() {
-        this.addButton(
-                new Button(
+        this.addButton(new Button(
                         this.width / 2 - 50,
-                        this.height / 2 - 10,
+                        this.height / 2 + 15,
                         100,
                         20,
-                        new StringTextComponent("slo"),
+                        new StringTextComponent("Create Station"),
                         v ->
                                 this.minecraft.displayGuiScreen(
                                         new ScreenModifyStation(this.dimID, this.player))));
+        this.addButton(new Button(
+                this.width / 2 - 50,
+                this.height / 2 - 15,
+                100,
+                20,
+                new StringTextComponent("View"),
+                v ->
+                        this.minecraft.displayGuiScreen(
+                                new ScreenStationSelection(this.dimID, this.player, false))));
         super.init();
     }
 
