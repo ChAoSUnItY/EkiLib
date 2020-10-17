@@ -21,7 +21,7 @@ public class ScreenStationSelection extends ScreenBase {
     private ScreenStationSelection.List list;
 
     public ScreenStationSelection(Screen previous, int dimID, PlayerEntity player) {
-        super(new TranslationTextComponent("eki.screen.station_selection"), previous, dimID, player);
+        super(new TranslationTextComponent("eki_lib.screen.station_selection"), previous, dimID, player);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ScreenStationSelection extends ScreenBase {
                         this.height - 50,
                         100,
                         20,
-                        new StringTextComponent("Modify / Create"),
+                        new TranslationTextComponent("eki_lib.screen.create_modify"),
                         v -> {
                             if (this.list.getSelected() != null)
                                 this.minecraft.displayGuiScreen(
@@ -56,7 +56,7 @@ public class ScreenStationSelection extends ScreenBase {
                         this.height - 50,
                         100,
                         20,
-                        new StringTextComponent("Remove"),
+                        new TranslationTextComponent("eki_lib.screen.remove"),
                         v -> {
                             if (this.list.getSelected() != null) {
                                 EkiLibApi.deleteStationsByPosition(this.list.getListener().station);
@@ -69,28 +69,34 @@ public class ScreenStationSelection extends ScreenBase {
                         this.height - 50,
                         100,
                         20,
-                        new StringTextComponent("Bind"),
+                        new TranslationTextComponent("eki_lib.screen.bind"),
                         v -> {
                             PacketHandler.INSTANCE.sendToServer(new PacketBindTuner(this.list.getSelected().station));
-                            ITextComponent msg = new StringTextComponent("Successfully binds the selected station to the station tuner!");
+                            ITextComponent msg = new TranslationTextComponent("eki_lib.screen.bind_accept");
                             this.player.sendStatusMessage(msg, true);
                             this.closeScreen();
                         },
                         (p1, p2, p3, p4) -> {
                             java.util.List<ITextComponent> list = Lists.newArrayList();
-                            list.add(new StringTextComponent("Binds the selected station to the station tuner you're holding."));
+                            list.add(new TranslationTextComponent("eki_lib.screen.bind.description"));
 
-                            if (!(this.player.getHeldItemMainhand().getItem() instanceof ItemStationTuner)) {
-                                IFormattableTextComponent subtext = new StringTextComponent("You aren't holding a station tuner in your mainhand!");
-                                subtext.mergeStyle(TextFormatting.RED);
-                                list.add(subtext);
-                            }
+                            if (!(this.player.getHeldItemMainhand().getItem() instanceof ItemStationTuner))
+                                list.add(new TranslationTextComponent("eki_lib.screen.bind.warning")
+                                        .mergeStyle(TextFormatting.RED));
+
 
                             this.renderTooltip(p2,
                                     Lists.transform(list, ITextComponent::func_241878_f),
                                     p3,
                                     p4);
                         }));
+        this.addButton(
+                new Button(this.width - 60,
+                        5,
+                        20,
+                        20,
+                        new StringTextComponent("X"),
+                        v -> this.minecraft.displayGuiScreen(this)));
         if (!(this.player.getHeldItemMainhand().getItem() instanceof ItemStationTuner))
             buttonBind.active = false;
         super.init();
@@ -104,13 +110,8 @@ public class ScreenStationSelection extends ScreenBase {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (mouseX > this.list.getRight() ||
-                mouseX < this.list.getLeft() ||
-                mouseY > this.list.getTop() ||
-                mouseY < this.list.getBottom())
-            this.minecraft.displayGuiScreen(this);
-        return super.mouseClicked(mouseX, mouseY, button);
+    public boolean isPauseScreen() {
+        return false;
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -158,7 +159,7 @@ public class ScreenStationSelection extends ScreenBase {
 
             @Override
             public void render(MatrixStack p_230432_1_, int p_230432_2_, int p_230432_3_, int p_230432_4_, int p_230432_5_, int p_230432_6_, int p_230432_7_, int p_230432_8_, boolean p_230432_9_, float p_230432_10_) {
-                String s = this.station.getName() + " - " + this.station.getFormmatedPosition();
+                String s = this.station.getName() + " - " + this.station.getFormattedPosition();
                 ScreenStationSelection.this.font.func_238406_a_(p_230432_1_, s, (float) (ScreenStationSelection.List.this.width / 2 - ScreenStationSelection.this.font.getStringWidth(s) / 2), (float) (p_230432_3_ + 1), 16777215, true);
             }
 

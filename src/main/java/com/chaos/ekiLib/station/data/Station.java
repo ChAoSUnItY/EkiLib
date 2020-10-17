@@ -27,7 +27,7 @@ public class Station {
         return position;
     }
 
-    public String getFormmatedPosition() {
+    public String getFormattedPosition() {
         return String.format("(%d, %d, %d)", position.getX(), position.getY(), position.getZ());
     }
 

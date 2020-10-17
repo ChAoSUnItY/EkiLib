@@ -69,7 +69,7 @@ public class EkiLib {
             StationWorldData saver = StationWorldData.forWorld((ServerWorld) event.getWorld());
 
             for (Station station : saver.stations)
-                LOGGER.info(station.getName() + " " + station.getFormmatedPosition());
+                LOGGER.info(station.getName() + " " + station.getFormattedPosition());
 
             StationHandler.INSTANCE.init(saver.stations);
         }

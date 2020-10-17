@@ -1,3 +1,24 @@
 {
-  "item.eki_lib.station_tuner": "Station Tuner"
+  "item.eki_lib.station_tuner": "Station Tuner",
+  "eki_lib.screen.modify_station": "Create / Modify Station",
+  "eki_lib.screen.station_selection": "Stations",
+  "eki_lib.screen.create_modify": "Create / Modify",
+  "eki_lib.screen.remove": "Remove",
+  "eki_lib.screen.bind": "Bind",
+  "eki_lib.screen.back": "Back",
+  "eki_lib.screen.create_accept": "Successfully Created Station ",
+  "eki_lib.screen.bind.description": "Binds the selected station to the station tuner you're holding.",
+  "eki_lib.screen.bind_accept": "Successfully binds the selected station to the station tuner!",
+  "eki_lib.screen.bind.warning": "You aren't holding a station tuner in your mainhand!",
+  "eki_lib.station.name": "Station Name",
+  "eki_lib.station.pos": "Station Position: (%d, %d, %d)",
+  "eki_lib.station.level": "Station Level: %s",
+  "eki_lib.station.level.special_class": "Special Class",
+  "eki_lib.station.level.first_class": "First Class",
+  "eki_lib.station.level.second_class": "Second Class",
+  "eki_lib.station.level.third_class": "Third Class",
+  "eki_lib.station.level.simple": "Simple",
+  "eki_lib.station.level.staffless": "Staffless",
+  "eki_lib.station.level.signal": "Signal",
+  "eki_lib.station.level.non": "Non"
 }

@@ -27,7 +27,7 @@ public class ScreenModifyStation extends ScreenBase {
     private BlockPos pos;
 
     public ScreenModifyStation(Screen previous, int dimensionType, PlayerEntity player) {
-        super(new TranslationTextComponent("eki.screen.modify_station"), previous, dimensionType, player);
+        super(new TranslationTextComponent("eki_lib.screen.modify_station"), previous, dimensionType, player);
         this.stationLevel = EnumStationLevel.THRID;
         this.pos = player.getPosition();
     }
@@ -46,9 +46,9 @@ public class ScreenModifyStation extends ScreenBase {
     @Override
     protected void init() {
         this.minecraft.keyboardListener.enableRepeatEvents(true);
-        this.addButton(new Button(this.width / 2 - 110, this.height / 2 + 50, 100, 20, new StringTextComponent("Back"),
+        this.addButton(new Button(this.width / 2 - 110, this.height / 2 + 50, 100, 20, new TranslationTextComponent("eki_lib.screen.back"),
                 v -> minecraft.displayGuiScreen(this.previous)));
-        this.buttonCreate = this.addButton(new Button(this.width / 2 + 10, this.height / 2 + 50, 100, 20, new StringTextComponent("Create"),
+        this.buttonCreate = this.addButton(new Button(this.width / 2 + 10, this.height / 2 + 50, 100, 20, new TranslationTextComponent("eki_lib.screen.create_modify"),
                 v -> {
                     Station station = new Station(this.textFieldStationName.getText(), this.pos, this.stationLevel, this.dimID);
                     if (this.station.isPresent())
@@ -57,7 +57,7 @@ public class ScreenModifyStation extends ScreenBase {
                         EkiLibApi.addStations(station);
                     EkiLibApi.markDirty();
                     IFormattableTextComponent boldPart = new StringTextComponent(this.textFieldStationName.getText()).mergeStyle(TextFormatting.BOLD);
-                    this.player.sendStatusMessage(new StringTextComponent("Successfully Added Station ").append(boldPart), true);
+                    this.player.sendStatusMessage(new TranslationTextComponent("eki_lib.screen.create_accept").append(boldPart), true);
                     this.closeScreen();
                 }));
         this.addButton(new Button(this.width / 2 + 110, this.height / 2 - 80, 20, 20, new StringTextComponent("<"),
@@ -87,10 +87,9 @@ public class ScreenModifyStation extends ScreenBase {
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.textFieldStationName.render(matrixStack, mouseX, mouseY, partialTicks);
         drawCenteredString(matrixStack, this.font, this.title, this.width / 2, this.height / 2 - 130, 16777215);
-        drawCenteredString(matrixStack, this.font, "Name", this.width / 2, this.height / 2 - 110, 16777215);
-        drawString(matrixStack, this.font, String.format("Position: (%d, %d, %d)", pos.getX(), pos.getY(), pos.getZ()), this.width / 2 + 110, this.height / 2 - 110, 16777215);
-        drawCenteredString(matrixStack, this.font, "Operator", this.width / 2, this.height / 2 - 60, 16777215);
-        drawString(matrixStack, this.font, String.format("Station Level: %s", EnumStationLevel.toTranslated(this.stationLevel)), this.width / 2 + 110, this.height / 2 - 90, 16777215);
+        drawCenteredString(matrixStack, this.font, new TranslationTextComponent("eki_lib.station.name"), this.width / 2, this.height / 2 - 110, 16777215);
+        drawString(matrixStack, this.font, new TranslationTextComponent("eki_lib.station.pos", pos.getX(), pos.getY(), pos.getZ()), this.width / 2 + 110, this.height / 2 - 110, 16777215);
+        drawString(matrixStack, this.font, new TranslationTextComponent("eki_lib.station.level", EnumStationLevel.toTranslated(this.stationLevel)), this.width / 2 + 110, this.height / 2 - 90, 16777215);
     }
 
     @Override

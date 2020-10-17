@@ -15,7 +15,7 @@ public enum EnumStationLevel {
     }
 
     public String getKey() {
-        return "station_level." + key;
+        return "eki_lib.station.level." + key;
     }
 
     public static TranslationTextComponent toTranslated(EnumStationLevel levelIn) {
