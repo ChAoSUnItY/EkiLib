@@ -4,15 +4,21 @@ import com.chaos.ekiLib.api.EkiLibApi;
 import com.chaos.ekiLib.station.data.EnumStationLevel;
 import com.chaos.ekiLib.station.data.Station;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Optional;
 
+@OnlyIn(Dist.CLIENT)
 public class ScreenModifyStation extends ScreenBase {
     private TextFieldWidget textFieldStationName;
     private Button buttonCreate;
@@ -20,14 +26,14 @@ public class ScreenModifyStation extends ScreenBase {
     private Optional<Station> station = Optional.empty();
     private BlockPos pos;
 
-    public ScreenModifyStation(int dimensionType, PlayerEntity player) {
-        super(new TranslationTextComponent("eki.screen.modify_station"), dimensionType, player);
+    public ScreenModifyStation(Screen previous, int dimensionType, PlayerEntity player) {
+        super(new TranslationTextComponent("eki.screen.modify_station"), previous, dimensionType, player);
         this.stationLevel = EnumStationLevel.THRID;
         this.pos = player.getPosition();
     }
 
-    public ScreenModifyStation(int dimensionType, PlayerEntity player, Station station) {
-        this(dimensionType, player);
+    public ScreenModifyStation(Screen previous, int dimensionType, PlayerEntity player, Station station) {
+        this(previous, dimensionType, player);
         this.station = Optional.of(station);
     }
 
@@ -41,7 +47,7 @@ public class ScreenModifyStation extends ScreenBase {
     protected void init() {
         this.minecraft.keyboardListener.enableRepeatEvents(true);
         this.addButton(new Button(this.width / 2 - 110, this.height / 2 + 50, 100, 20, new StringTextComponent("Back"),
-                v -> minecraft.displayGuiScreen(new ScreenMenu(this.dimID, this.player))));
+                v -> minecraft.displayGuiScreen(this.previous)));
         this.buttonCreate = this.addButton(new Button(this.width / 2 + 10, this.height / 2 + 50, 100, 20, new StringTextComponent("Create"),
                 v -> {
                     Station station = new Station(this.textFieldStationName.getText(), this.pos, this.stationLevel, this.dimID);
@@ -50,7 +56,8 @@ public class ScreenModifyStation extends ScreenBase {
                     else
                         EkiLibApi.addStations(station);
                     EkiLibApi.markDirty();
-                    this.player.sendStatusMessage(new StringTextComponent("Successfully Added Station " + this.textFieldStationName.getText()), false);
+                    IFormattableTextComponent boldPart = new StringTextComponent(this.textFieldStationName.getText()).mergeStyle(TextFormatting.BOLD);
+                    this.player.sendStatusMessage(new StringTextComponent("Successfully Added Station ").append(boldPart), true);
                     this.closeScreen();
                 }));
         this.addButton(new Button(this.width / 2 + 110, this.height / 2 - 80, 20, 20, new StringTextComponent("<"),
@@ -83,7 +90,7 @@ public class ScreenModifyStation extends ScreenBase {
         drawCenteredString(matrixStack, this.font, "Name", this.width / 2, this.height / 2 - 110, 16777215);
         drawString(matrixStack, this.font, String.format("Position: (%d, %d, %d)", pos.getX(), pos.getY(), pos.getZ()), this.width / 2 + 110, this.height / 2 - 110, 16777215);
         drawCenteredString(matrixStack, this.font, "Operator", this.width / 2, this.height / 2 - 60, 16777215);
-        drawString(matrixStack, this.font, String.format("Station Level: %s", this.stationLevel.getFormattedName()), this.width / 2 + 110, this.height / 2 - 90, 16777215);
+        drawString(matrixStack, this.font, String.format("Station Level: %s", EnumStationLevel.toTranslated(this.stationLevel)), this.width / 2 + 110, this.height / 2 - 90, 16777215);
     }
 
     @Override

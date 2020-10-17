@@ -34,5 +34,11 @@ public class PacketHandler {
                 PacketInitStationHandler.PacketReloadStationHandler::encode,
                 PacketInitStationHandler.PacketReloadStationHandler::decode,
                 PacketInitStationHandler.PacketReloadStationHandler::handle);
+
+        INSTANCE.registerMessage(ID++,
+                PacketBindTuner.class,
+                PacketBindTuner::encode,
+                PacketBindTuner::decode,
+                PacketBindTuner::handle);
     }
 }

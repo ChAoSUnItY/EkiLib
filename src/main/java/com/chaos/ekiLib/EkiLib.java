@@ -1,8 +1,8 @@
 package com.chaos.ekiLib;
 
-import com.chaos.ekiLib.commands.CommandEkiLib;
 import com.chaos.ekiLib.station.StationWorldData;
 import com.chaos.ekiLib.station.data.Station;
+import com.chaos.ekiLib.utils.handlers.ClientRegistryHandler;
 import com.chaos.ekiLib.utils.handlers.PacketHandler;
 import com.chaos.ekiLib.utils.handlers.RegistryHandler;
 import com.chaos.ekiLib.utils.handlers.StationHandler;
@@ -45,6 +45,7 @@ public class EkiLib {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(this::onWorldLoaded);
         MinecraftForge.EVENT_BUS.addListener(this::onWorldSave);
+        MinecraftForge.EVENT_BUS.addListener(this::onWorldUnload);
         MinecraftForge.EVENT_BUS.addListener(this::onLogging);
         MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
     }
@@ -54,6 +55,7 @@ public class EkiLib {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
+        MinecraftForge.EVENT_BUS.addListener(ClientRegistryHandler::onClientTick);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
@@ -81,6 +83,14 @@ public class EkiLib {
         }
     }
 
+    public void onWorldUnload(WorldEvent.Unload event) {
+        if (!event.getWorld().isRemote() && event.getWorld() instanceof ServerWorld) {
+            StationWorldData saver = StationWorldData.forWorld((ServerWorld) event.getWorld());
+            saver.stations = StationHandler.INSTANCE.getStations();
+            saver.markDirty();
+        }
+    }
+
     public void onLogging(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getPlayer().isServerWorld()) {
             PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketInitStationHandler(StationHandler.INSTANCE.getStations()));
@@ -88,7 +98,6 @@ public class EkiLib {
     }
 
     public void onServerStarting(FMLServerStartingEvent event) {
-        CommandEkiLib.register(event.getServer().getCommandManager().getDispatcher());
     }
 
     public static final ItemGroup EkiLibGroup = new ItemGroup("eki_lib_tab") {
