@@ -2,6 +2,9 @@ package com.chaos.ekiLib.gui.screen;
 
 import com.chaos.ekiLib.EkiLib;
 import com.chaos.ekiLib.gui.container.TicketVendorContainer;
+import com.chaos.ekiLib.tileentity.TicketVendorTileEntity;
+import com.chaos.ekiLib.utils.handlers.PacketHandler;
+import com.chaos.ekiLib.utils.network.PacketVendorSpawnTicket;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -20,13 +23,15 @@ import java.util.regex.Pattern;
 @OnlyIn(Dist.CLIENT)
 public class TicketVendorScreen extends ContainerScreen<TicketVendorContainer> {
     private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(EkiLib.MODID, "textures/gui/container/ticket_vendor.png");
-    private static final Pattern regex = Pattern.compile("\\d+");
+    private static final Pattern regex = Pattern.compile("\\d*");
+    private final TicketVendorTileEntity TVte;
     private TextFieldWidget priceInputTextField;
     private Button clearButton;
     private Button confirmedButton;
 
     public TicketVendorScreen(TicketVendorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
+        this.TVte = screenContainer.getVendor();
         this.guiLeft = 0;
         this.guiTop = 0;
         this.xSize = 176;
@@ -35,33 +40,37 @@ public class TicketVendorScreen extends ContainerScreen<TicketVendorContainer> {
 
     @Override
     protected void init() {
+        super.init();
         this.clearButton = this.addButton(new Button(
                 this.guiLeft + 18,
-                this.guiTop + 45,
+                this.guiTop + 47,
                 50,
                 20,
                 new TranslationTextComponent("eki_lib.screen.clear"),
                 v -> this.priceInputTextField.setText("")));
         this.confirmedButton = this.addButton(new Button(
-                this.guiLeft + 59,
-                this.guiTop + 45,
+                this.guiLeft + 85,
+                this.guiTop + 47,
                 50,
                 20,
                 new TranslationTextComponent("eki_lib.screen.confirmed"),
                 v -> {
+                    double value = Double.valueOf(this.priceInputTextField.getText().isEmpty() ? "0" : this.priceInputTextField.getText());
+                    PacketHandler.INSTANCE.sendToServer(new PacketVendorSpawnTicket(this.TVte.getPos(), 0, value));
                 }));
-        super.init();
         this.minecraft.keyboardListener.enableRepeatEvents(true);
         this.priceInputTextField = new TextFieldWidget(this.font,
                 this.guiLeft + 18,
-                this.guiTop + 30,
-                119,
+                this.guiTop + 32,
+                117,
                 13,
                 new StringTextComponent(""));
-        this.priceInputTextField.setFocused2(true);
         this.priceInputTextField.setResponder(s -> this.confirmedButton.active = !s.isEmpty());
         this.priceInputTextField.setValidator(s -> regex.matcher(s).matches());
         this.children.add(this.priceInputTextField);
+
+        this.confirmedButton.active = !this.priceInputTextField.getText().isEmpty();
+        this.priceInputTextField.mouseClicked(this.guiLeft + 19, this.guiTop + 33, 1);
     }
 
     @Override
@@ -73,6 +82,7 @@ public class TicketVendorScreen extends ContainerScreen<TicketVendorContainer> {
     public void render(final MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.priceInputTextField.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 

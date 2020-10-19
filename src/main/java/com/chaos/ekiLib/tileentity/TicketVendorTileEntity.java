@@ -56,7 +56,7 @@ public class TicketVendorTileEntity extends LockableLootTileEntity {
     }
 
     @Override
-    protected void setItems(NonNullList<ItemStack> itemsIn) {
+    public void setItems(NonNullList<ItemStack> itemsIn) {
         this.vendorContent = itemsIn;
     }
 

@@ -40,5 +40,11 @@ public class PacketHandler {
                 PacketBindTuner::encode,
                 PacketBindTuner::decode,
                 PacketBindTuner::handle);
+
+        INSTANCE.registerMessage(ID++,
+                PacketVendorSpawnTicket.class,
+                PacketVendorSpawnTicket::encode,
+                PacketVendorSpawnTicket::decode,
+                PacketVendorSpawnTicket::handle);
     }
 }

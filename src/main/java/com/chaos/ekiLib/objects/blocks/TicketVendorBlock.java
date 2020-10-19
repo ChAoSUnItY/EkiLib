@@ -1,8 +1,10 @@
 package com.chaos.ekiLib.objects.blocks;
 
 import com.chaos.ekiLib.objects.blocks.base.HorizontalBaseBlock;
+import com.chaos.ekiLib.objects.items.StationTunerItem;
 import com.chaos.ekiLib.tileentity.TicketVendorTileEntity;
 import com.chaos.ekiLib.utils.handlers.TileEntityHandler;
+import com.chaos.ekiLib.utils.util.UtilStationConverter;
 import com.chaos.ekiLib.utils.util.voxel_shapes.HorizontalVoxelShapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -19,6 +22,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
@@ -169,10 +175,24 @@ public class TicketVendorBlock extends HorizontalBaseBlock {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!worldIn.isRemote) {
-            TileEntity te = worldIn.getTileEntity(pos);
-            if (te instanceof TicketVendorTileEntity) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (TicketVendorTileEntity) te, pos);
+        ItemStack stack = player.getHeldItem(handIn);
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (te instanceof TicketVendorTileEntity) {
+            TicketVendorTileEntity TVte = (TicketVendorTileEntity) te;
+            if (stack.getItem() instanceof StationTunerItem && stack.hasTag()) {
+                if (UtilStationConverter.hasStationInfo(stack.getTag())) {
+                    TVte.setStation(UtilStationConverter.toStation(stack.getTag()));
+                    player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.station_bind")
+                            .append(new StringTextComponent(stack.getTag().getString(UtilStationConverter.NAME)).mergeStyle(TextFormatting.BOLD))
+                            .mergeStyle(TextFormatting.GREEN), true);
+                } else {
+                    player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.invalid_item").mergeStyle(TextFormatting.RED), true);
+                }
+                return ActionResultType.SUCCESS;
+            }
+
+            if (!worldIn.isRemote) {
+                NetworkHooks.openGui((ServerPlayerEntity) player, TVte, pos);
                 return ActionResultType.SUCCESS;
             }
         }

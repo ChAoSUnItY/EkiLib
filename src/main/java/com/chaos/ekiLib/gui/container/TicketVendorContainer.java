@@ -26,22 +26,26 @@ public class TicketVendorContainer extends Container {
     public TicketVendorContainer(final IInventory inventory, final int id, final TicketVendorTileEntity TVte) {
         super(ContainerHandler.TICKET_VENDOR_CONTAINER.get(), id);
         this.TVte = TVte;
-        this.slot = new TicketVendorSlot(inventory, 36, 140, 50);
+        this.slot = new TicketVendorSlot(TVte, 0, 140, 50);
         this.addSlot(this.slot);
 
-        for(int l = 0; l < 3; ++l) {
-            for(int j1 = 0; j1 < 9; ++j1) {
+        for (int l = 0; l < 3; ++l) {
+            for (int j1 = 0; j1 < 9; ++j1) {
                 this.addSlot(new Slot(inventory, j1 + l * 9 + 9, 8 + j1 * 18, 84 + l * 18));
             }
         }
 
-        for(int i1 = 0; i1 < 9; ++i1) {
+        for (int i1 = 0; i1 < 9; ++i1) {
             this.addSlot(new Slot(inventory, i1, 8 + i1 * 18, 142));
         }
     }
 
     public TicketVendorContainer(final int ID, final PlayerInventory inv, final PacketBuffer buf) {
         this(inv, ID, getTicketVendorTileEntity(inv, buf));
+    }
+
+    public TicketVendorTileEntity getVendor() {
+        return this.TVte;
     }
 
     private static TicketVendorTileEntity getTicketVendorTileEntity(final PlayerInventory inv, final PacketBuffer buf) {
