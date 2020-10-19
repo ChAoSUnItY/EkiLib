@@ -1,12 +1,11 @@
 package com.chaos.ekiLib;
 
+import com.chaos.ekiLib.gui.screen.TicketVendorScreen;
 import com.chaos.ekiLib.station.StationWorldData;
 import com.chaos.ekiLib.station.data.Station;
-import com.chaos.ekiLib.utils.handlers.ClientRegistryHandler;
-import com.chaos.ekiLib.utils.handlers.PacketHandler;
-import com.chaos.ekiLib.utils.handlers.RegistryHandler;
-import com.chaos.ekiLib.utils.handlers.StationHandler;
+import com.chaos.ekiLib.utils.handlers.*;
 import com.chaos.ekiLib.utils.network.PacketInitStationHandler;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -37,11 +36,12 @@ public class EkiLib {
 
         RegistryHandler.ITEMS.register(bus);
         RegistryHandler.BLOCKS.register(bus);
+        TileEntityHandler.TILE_ENTITY_TYPES.register(bus);
+        ContainerHandler.CONTAINER_TYPES.register(bus);
 
         bus.addListener(this::setup);
         bus.addListener(this::enqueueIMC);
         bus.addListener(this::processIMC);
-        bus.addListener(this::doClientStuff);
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(this::onWorldLoaded);
@@ -55,9 +55,6 @@ public class EkiLib {
         PacketHandler.init();
     }
 
-    private void doClientStuff(final FMLClientSetupEvent event) {
-        MinecraftForge.EVENT_BUS.addListener(ClientRegistryHandler::onClientTick);
-    }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
     }

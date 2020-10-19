@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "eki_lib:ticket",
+    "eki_lib:ic_ticket"
+  ]
+}

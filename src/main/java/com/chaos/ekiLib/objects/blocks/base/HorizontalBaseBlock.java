@@ -1,6 +1,5 @@
 package com.chaos.ekiLib.objects.blocks.base;
 
-import com.chaos.ekiLib.utils.util.voxel_shapes.HorizontalVoxelShapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
@@ -13,10 +12,10 @@ import net.minecraft.util.Rotation;
 
 import javax.annotation.Nullable;
 
-public class BlockHorizontalBase extends BlockBase {
+public class HorizontalBaseBlock extends BaseBlock {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
-    public BlockHorizontalBase(Properties properties) {
+    public HorizontalBaseBlock(Properties properties) {
         super(properties);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH));
     }

@@ -1,4 +1,4 @@
-package com.chaos.ekiLib.screen;
+package com.chaos.ekiLib.gui.screen;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
@@ -7,12 +7,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenBase extends Screen {
+public class BaseScreen extends Screen {
     protected Screen previous;
     protected int dimID;
     protected final PlayerEntity player;
 
-    public ScreenBase(ITextComponent titleIn, Screen previous, int dimID, PlayerEntity player) {
+    public BaseScreen(ITextComponent titleIn, Screen previous, int dimID, PlayerEntity player) {
         super(titleIn);
         this.previous = previous;
         this.dimID = dimID;

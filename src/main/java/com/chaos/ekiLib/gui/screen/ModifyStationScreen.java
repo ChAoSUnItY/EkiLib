@@ -1,4 +1,4 @@
-package com.chaos.ekiLib.screen;
+package com.chaos.ekiLib.gui.screen;
 
 import com.chaos.ekiLib.api.EkiLibApi;
 import com.chaos.ekiLib.station.data.EnumStationLevel;
@@ -19,20 +19,20 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Optional;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenModifyStation extends ScreenBase {
+public class ModifyStationScreen extends BaseScreen {
     private TextFieldWidget textFieldStationName;
     private Button buttonCreate;
     private EnumStationLevel stationLevel;
     private Optional<Station> station = Optional.empty();
     private BlockPos pos;
 
-    public ScreenModifyStation(Screen previous, int dimensionType, PlayerEntity player) {
+    public ModifyStationScreen(Screen previous, int dimensionType, PlayerEntity player) {
         super(new TranslationTextComponent("eki_lib.screen.modify_station"), previous, dimensionType, player);
         this.stationLevel = EnumStationLevel.THRID;
         this.pos = player.getPosition();
     }
 
-    public ScreenModifyStation(Screen previous, int dimensionType, PlayerEntity player, Station station) {
+    public ModifyStationScreen(Screen previous, int dimensionType, PlayerEntity player, Station station) {
         this(previous, dimensionType, player);
         this.station = Optional.of(station);
     }

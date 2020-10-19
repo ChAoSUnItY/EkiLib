@@ -2,8 +2,8 @@ package com.chaos.ekiLib.objects.items;
 
 import net.minecraft.item.Item;
 
-public class ItemStationTuner extends ItemBase {
-    public ItemStationTuner() {
+public class StationTunerItem extends BaseItem {
+    public StationTunerItem() {
         super(new Item.Properties().setNoRepair().maxStackSize(1));
     }
 }

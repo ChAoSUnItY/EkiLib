@@ -1,27 +1,46 @@
 package com.chaos.ekiLib.objects.blocks;
 
-import com.chaos.ekiLib.objects.blocks.base.BlockHorizontalBase;
+import com.chaos.ekiLib.api.EkiLibApi;
+import com.chaos.ekiLib.objects.blocks.base.HorizontalBaseBlock;
+import com.chaos.ekiLib.objects.items.StationTunerItem;
+import com.chaos.ekiLib.objects.items.TicketItem;
+import com.chaos.ekiLib.station.data.Station;
+import com.chaos.ekiLib.tileentity.TicketGateTileEntity;
+import com.chaos.ekiLib.utils.handlers.TileEntityHandler;
+import com.chaos.ekiLib.utils.util.UtilDimensionConverter;
+import com.chaos.ekiLib.utils.util.UtilDistanceHelper;
+import com.chaos.ekiLib.utils.util.UtilStationConverter;
 import com.chaos.ekiLib.utils.util.voxel_shapes.HorizontalVoxelShapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
 
+import javax.annotation.Nullable;
+import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Stream;
 
-public class BlockTicketGate extends BlockHorizontalBase {
+public class TicketGateBlock extends HorizontalBaseBlock {
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
     public static final HorizontalVoxelShapes UNOPENED_SHAPES = new HorizontalVoxelShapes(
             Stream.of(
@@ -259,7 +278,7 @@ public class BlockTicketGate extends BlockHorizontalBase {
                     Block.makeCuboidShape(15.75, 8, 13, 16, 10.5, 15.5)
             ));
 
-    public BlockTicketGate() {
+    public TicketGateBlock() {
         super(Block.Properties.create(Material.IRON)
                 .hardnessAndResistance(5.0f, 6.0f)
                 .sound(SoundType.METAL)
@@ -271,8 +290,88 @@ public class BlockTicketGate extends BlockHorizontalBase {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        worldIn.setBlockState(pos, state.with(OPEN, !state.get(OPEN)));
-        return ActionResultType.SUCCESS;
+        ItemStack stack = player.getHeldItem(handIn);
+        TileEntity te = worldIn.getTileEntity(pos);
+        if (!worldIn.isRemote && te instanceof TicketGateTileEntity) {
+            TicketGateTileEntity TGte = (TicketGateTileEntity) te;
+            if (!TGte.checkStation())
+                TGte.setStation(null);
+
+            if (stack.getItem() instanceof StationTunerItem) {
+                if (!stack.hasTag()) {
+                    player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.invalid_item").mergeStyle(TextFormatting.RED), true);
+                    return ActionResultType.SUCCESS;
+                }
+
+                if (UtilStationConverter.hasStationInfo(stack.getTag())) {
+                    TGte.setStation(UtilStationConverter.toStation(stack.getTag()));
+                    player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.station_bind")
+                            .append(new StringTextComponent(stack.getTag().getString(UtilStationConverter.NAME)).mergeStyle(TextFormatting.BOLD))
+                            .mergeStyle(TextFormatting.GREEN), true);
+                } else {
+                    player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.invalid_item").mergeStyle(TextFormatting.RED), true);
+                }
+                return ActionResultType.SUCCESS;
+            } else if (!state.get(OPEN) && stack.getItem() instanceof TicketItem) {
+                TicketItem ticket = (TicketItem) stack.getItem();
+                if (!stack.hasTag()) {
+                    player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.invalid_item").mergeStyle(TextFormatting.RED), true);
+                    return ActionResultType.PASS;
+                }
+
+                if (stack.getTag().contains("value")) {
+                    if (hit.getFace() == Direction.UP || hit.getFace() == state.get(FACING)) {
+                        CompoundNBT nbt = stack.getTag();
+                        if (nbt.contains("startPos")) {
+                            double requiredPrice = UtilDistanceHelper.calculatePrice(
+                                    UtilStationConverter.toBlockPos(nbt.getIntArray("startPos")), TGte.hasStation() ? TGte.getStation().getPosition() : pos);
+                            double value = nbt.getDouble("value");
+                            if (value >= requiredPrice) {
+                                switch (ticket.getType()) {
+                                    case 2:
+                                        stack.getTag().putDouble("value", nbt.getDouble("value") - requiredPrice);
+                                        stack.getTag().remove("startPos");
+                                        open(player, worldIn, pos, state);
+                                        break;
+                                    case 1:
+                                        stack.shrink(1);
+                                    default:
+                                        open(player, worldIn, pos, state);
+                                }
+                                Optional<Station> from = EkiLibApi.getStationByPosition(UtilStationConverter.toBlockPos(stack.getTag().getIntArray(UtilStationConverter.POSITION)), UtilDimensionConverter.dimensionKeyToID(worldIn.getDimensionKey()).getAsInt());
+                                ITextComponent subtext;
+                                if (from.isPresent()) {
+                                    subtext = new StringTextComponent(from.get().getName()).mergeStyle(TextFormatting.BOLD);
+                                } else {
+                                    subtext = new TranslationTextComponent("eki_lib.message.no_longer_exists").mergeStyle(TextFormatting.ITALIC);
+                                }
+                                player.sendStatusMessage(new TranslationTextComponent("eki.message.exit", subtext).mergeStyle(TextFormatting.GREEN), true);
+                                open(player, worldIn, pos, state);
+                            } else {
+                                player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.balance_shortage", requiredPrice, value), true);
+                            }
+                        } else {
+                            nbt.putIntArray("startPos", UtilStationConverter.toINTarray(TGte.hasStation() ? TGte.getStation().getPosition() : pos));
+                            stack.setTag(nbt);
+                            open(player, worldIn, pos, state);
+                        }
+                        return ActionResultType.SUCCESS;
+                    }
+                } else {
+                    player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.invalid_ticket").mergeStyle(TextFormatting.RED), true);
+                }
+            }
+        }
+        return ActionResultType.PASS;
+    }
+
+    @Override
+    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+        if (state.get(OPEN)) {
+            worldIn.setBlockState(pos, state.with(OPEN, false));
+            worldIn.notifyNeighborsOfStateChange(pos, this);
+            worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_IRON_DOOR_CLOSE, SoundCategory.BLOCKS, 1F, 1F);
+        }
     }
 
     @Override
@@ -307,5 +406,28 @@ public class BlockTicketGate extends BlockHorizontalBase {
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(OPEN);
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return TileEntityHandler.TICKET_GATE.get().create();
+    }
+
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock())
+            super.onReplaced(state, worldIn, pos, newState, isMoving);
+    }
+
+    public void open(PlayerEntity playerIn, World worldIn, BlockPos pos, BlockState state) {
+        worldIn.setBlockState(pos, state.with(OPEN, true));
+        worldIn.getPendingBlockTicks().scheduleTick(pos, this, 5 * 20);
+        worldIn.playSound(null, pos, SoundEvents.BLOCK_IRON_DOOR_OPEN, SoundCategory.BLOCKS, 1, 1);
     }
 }

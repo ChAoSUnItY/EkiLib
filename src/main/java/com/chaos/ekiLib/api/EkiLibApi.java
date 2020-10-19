@@ -2,8 +2,10 @@ package com.chaos.ekiLib.api;
 
 import com.chaos.ekiLib.station.data.Station;
 import com.chaos.ekiLib.utils.handlers.StationHandler;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -12,6 +14,10 @@ import java.util.stream.Stream;
 public class EkiLibApi {
     public static void reloadStations(List<Station> stations) {
         StationHandler.INSTANCE.reload(stations);
+    }
+
+    public static Optional<Station> getStationByPosition(BlockPos pos, int dimID) {
+        return StationHandler.INSTANCE.getStations().stream().filter(station -> station.getPosition().equals(pos) && station.getDimensionID() == dimID).findFirst();
     }
 
     public static void addStations(Station... stations) {

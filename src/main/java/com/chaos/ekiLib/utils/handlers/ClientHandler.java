@@ -1,19 +1,23 @@
 package com.chaos.ekiLib.utils.handlers;
 
 import com.chaos.ekiLib.EkiLib;
-import com.chaos.ekiLib.screen.ScreenStationSelection;
+import com.chaos.ekiLib.gui.screen.StationSelectionScreen;
+import com.chaos.ekiLib.gui.screen.TicketVendorScreen;
 import com.chaos.ekiLib.utils.util.UtilDimensionConverter;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.lwjgl.glfw.GLFW;
 
-@Mod.EventBusSubscriber(modid = EkiLib.MODID, value = Dist.CLIENT)
-public class ClientRegistryHandler {
+@Mod.EventBusSubscriber(modid = EkiLib.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+public class ClientHandler {
     public static KeyBinding[] keyBindings;
 
     static {
@@ -26,12 +30,16 @@ public class ClientRegistryHandler {
     }
 
     @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
+    public static void clientSetup(final FMLClientSetupEvent event) {
+        ScreenManager.registerFactory(ContainerHandler.TICKET_VENDOR_CONTAINER.get(), TicketVendorScreen::new);
+        MinecraftForge.EVENT_BUS.addListener(ClientHandler::onClientTick);
+    }
+
+    public static void onClientTick(final TickEvent.ClientTickEvent event) {
         if (keyBindings[0].isPressed()) {
-            EkiLib.LOGGER.info("Pressed by fucker.");
             Minecraft mc = Minecraft.getInstance();
             mc.displayGuiScreen(
-                    new ScreenStationSelection(
+                    new StationSelectionScreen(
                             null,
                             UtilDimensionConverter.dimensionKeyToID(mc.world.getDimensionKey()).getAsInt(),
                             mc.getConnection().getWorld().getPlayerByUuid(mc.player.getUniqueID())));

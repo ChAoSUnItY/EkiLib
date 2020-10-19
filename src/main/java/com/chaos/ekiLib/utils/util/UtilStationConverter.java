@@ -24,6 +24,10 @@ public class UtilStationConverter {
         return new Station(nbt.getString(NAME), toBlockPos(nbt.getIntArray(POSITION)), EnumStationLevel.valueOf(nbt.getString(LEVEL)), nbt.getInt(ID));
     }
 
+    public static boolean hasStationInfo(CompoundNBT nbt) {
+        return nbt.contains(NAME) && nbt.contains(POSITION) && nbt.contains(LEVEL) && nbt.contains(ID);
+    }
+
     public static int[] toINTarray(BlockPos pos) {
         return new int[]{pos.getX(), pos.getY(), pos.getZ()};
     }

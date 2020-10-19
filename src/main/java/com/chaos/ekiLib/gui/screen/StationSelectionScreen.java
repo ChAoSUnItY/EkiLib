@@ -1,7 +1,7 @@
-package com.chaos.ekiLib.screen;
+package com.chaos.ekiLib.gui.screen;
 
 import com.chaos.ekiLib.api.EkiLibApi;
-import com.chaos.ekiLib.objects.items.ItemStationTuner;
+import com.chaos.ekiLib.objects.items.StationTunerItem;
 import com.chaos.ekiLib.station.data.Station;
 import com.chaos.ekiLib.utils.handlers.PacketHandler;
 import com.chaos.ekiLib.utils.network.PacketBindTuner;
@@ -12,21 +12,25 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.list.ExtendedList;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ScreenStationSelection extends ScreenBase {
-    private ScreenStationSelection.List list;
+public class StationSelectionScreen extends BaseScreen {
+    private Button bindButton;
+    private StationSelectionScreen.List list;
 
-    public ScreenStationSelection(Screen previous, int dimID, PlayerEntity player) {
+    public StationSelectionScreen(Screen previous, int dimID, PlayerEntity player) {
         super(new TranslationTextComponent("eki_lib.screen.station_selection"), previous, dimID, player);
     }
 
     @Override
     protected void init() {
-        this.list = new ScreenStationSelection.List(this.minecraft);
+        this.list = new StationSelectionScreen.List(this.minecraft);
         this.children.add(this.list);
         this.addButton(
                 new Button(this.width / 2 - 200,
@@ -37,14 +41,14 @@ public class ScreenStationSelection extends ScreenBase {
                         v -> {
                             if (this.list.getSelected() != null)
                                 this.minecraft.displayGuiScreen(
-                                        new ScreenModifyStation(
+                                        new ModifyStationScreen(
                                                 this,
                                                 this.dimID,
                                                 this.player,
                                                 this.list.getSelected().station));
                             else
                                 this.minecraft.displayGuiScreen(
-                                        new ScreenModifyStation(
+                                        new ModifyStationScreen(
                                                 this,
                                                 this.dimID,
                                                 this.player
@@ -64,13 +68,16 @@ public class ScreenStationSelection extends ScreenBase {
                                 this.minecraft.displayGuiScreen(this);
                             }
                         }));
-        Button buttonBind = this.addButton(
+        this.bindButton = this.addButton(
                 new Button(this.width / 2 + 100,
                         this.height - 50,
                         100,
                         20,
                         new TranslationTextComponent("eki_lib.screen.bind"),
                         v -> {
+                            if (this.list.getSelected().station == null)
+                                return;
+
                             PacketHandler.INSTANCE.sendToServer(new PacketBindTuner(this.list.getSelected().station));
                             ITextComponent msg = new TranslationTextComponent("eki_lib.screen.bind_accept");
                             this.player.sendStatusMessage(msg, true);
@@ -80,7 +87,7 @@ public class ScreenStationSelection extends ScreenBase {
                             java.util.List<ITextComponent> list = Lists.newArrayList();
                             list.add(new TranslationTextComponent("eki_lib.screen.bind.description"));
 
-                            if (!(this.player.getHeldItemMainhand().getItem() instanceof ItemStationTuner))
+                            if (!(this.player.getHeldItemMainhand().getItem() instanceof StationTunerItem))
                                 list.add(new TranslationTextComponent("eki_lib.screen.bind.warning")
                                         .mergeStyle(TextFormatting.RED));
 
@@ -96,9 +103,12 @@ public class ScreenStationSelection extends ScreenBase {
                         20,
                         20,
                         new StringTextComponent("X"),
-                        v -> this.minecraft.displayGuiScreen(this)));
-        if (!(this.player.getHeldItemMainhand().getItem() instanceof ItemStationTuner))
-            buttonBind.active = false;
+                        v -> {
+                            this.minecraft.displayGuiScreen(this);
+                            this.bindButton.active = false;
+                        }));
+        if (!(this.player.getHeldItemMainhand().getItem() instanceof StationTunerItem))
+            this.bindButton.active = false;
         super.init();
     }
 
@@ -115,11 +125,11 @@ public class ScreenStationSelection extends ScreenBase {
     }
 
     @OnlyIn(Dist.CLIENT)
-    class List extends ExtendedList<ScreenStationSelection.List.StationEntry> {
+    class List extends ExtendedList<StationSelectionScreen.List.StationEntry> {
         public List(Minecraft mcIn) {
-            super(mcIn, ScreenStationSelection.this.width, ScreenStationSelection.this.height, 32, ScreenStationSelection.this.height - 65 + 4, 18);
+            super(mcIn, StationSelectionScreen.this.width, StationSelectionScreen.this.height, 32, StationSelectionScreen.this.height - 65 + 4, 18);
 
-            for (Station station : EkiLibApi.getStationList(ScreenStationSelection.this.dimID)) {
+            for (Station station : EkiLibApi.getStationList(StationSelectionScreen.this.dimID)) {
                 this.addEntry(new StationEntry(station));
             }
 
@@ -141,16 +151,16 @@ public class ScreenStationSelection extends ScreenBase {
 
         @Override
         protected void renderBackground(MatrixStack matrixStack) {
-            ScreenStationSelection.this.renderBackground(matrixStack);
+            StationSelectionScreen.this.renderBackground(matrixStack);
         }
 
         @Override
         protected boolean isFocused() {
-            return ScreenStationSelection.this.getListener() == this;
+            return StationSelectionScreen.this.getListener() == this;
         }
 
         @OnlyIn(Dist.CLIENT)
-        public class StationEntry extends ExtendedList.AbstractListEntry<ScreenStationSelection.List.StationEntry> {
+        public class StationEntry extends ExtendedList.AbstractListEntry<StationSelectionScreen.List.StationEntry> {
             private final Station station;
 
             public StationEntry(Station station) {
@@ -160,12 +170,13 @@ public class ScreenStationSelection extends ScreenBase {
             @Override
             public void render(MatrixStack p_230432_1_, int p_230432_2_, int p_230432_3_, int p_230432_4_, int p_230432_5_, int p_230432_6_, int p_230432_7_, int p_230432_8_, boolean p_230432_9_, float p_230432_10_) {
                 String s = this.station.getName() + " - " + this.station.getFormattedPosition();
-                ScreenStationSelection.this.font.func_238406_a_(p_230432_1_, s, (float) (ScreenStationSelection.List.this.width / 2 - ScreenStationSelection.this.font.getStringWidth(s) / 2), (float) (p_230432_3_ + 1), 16777215, true);
+                StationSelectionScreen.this.font.func_238406_a_(p_230432_1_, s, (float) (StationSelectionScreen.List.this.width / 2 - StationSelectionScreen.this.font.getStringWidth(s) / 2), (float) (p_230432_3_ + 1), 16777215, true);
             }
 
             @Override
             public boolean mouseClicked(double mouseX, double mouseY, int button) {
                 if (button == 0) {
+                    StationSelectionScreen.this.bindButton.active = true;
                     this.select();
                     return true;
                 } else {
@@ -174,7 +185,7 @@ public class ScreenStationSelection extends ScreenBase {
             }
 
             private void select() {
-                ScreenStationSelection.List.this.setSelected(this);
+                StationSelectionScreen.List.this.setSelected(this);
             }
         }
     }
