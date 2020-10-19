@@ -13,6 +13,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class RegistryHandler {
+    public static final Item.Properties DEFAULT_ITEM_BLOCK_PROPERTIES = new Item.Properties().group(EkiLib.EkiLibGroup);
+
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EkiLib.MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, EkiLib.MODID);
 
@@ -28,7 +30,7 @@ public class RegistryHandler {
 
     // BLOCK ITEM
     public static final RegistryObject<BlockItem> TICKET_GATE_ITEM = ITEMS.register("ticket_gate",
-            () -> new BlockItem(TICKET_GATE.get(), new Item.Properties().group(EkiLib.EkiLibGroup)));
+            () -> new BlockItem(TICKET_GATE.get(), DEFAULT_ITEM_BLOCK_PROPERTIES));
     public static final RegistryObject<BlockItem> TICKET_VENDOR_ITEM = ITEMS.register("ticket_vendor",
-            () -> new BlockItem(TICKET_VENDOR.get(), new Item.Properties().group(EkiLib.EkiLibGroup)));
+            () -> new BlockItem(TICKET_VENDOR.get(), DEFAULT_ITEM_BLOCK_PROPERTIES));
 }

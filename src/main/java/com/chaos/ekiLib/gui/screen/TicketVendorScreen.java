@@ -55,7 +55,7 @@ public class TicketVendorScreen extends ContainerScreen<TicketVendorContainer> {
                 20,
                 new TranslationTextComponent("eki_lib.screen.confirmed"),
                 v -> {
-                    double value = Double.valueOf(this.priceInputTextField.getText().isEmpty() ? "0" : this.priceInputTextField.getText());
+                    double value = Double.parseDouble(this.priceInputTextField.getText().isEmpty() ? "0" : this.priceInputTextField.getText());
                     PacketHandler.INSTANCE.sendToServer(new PacketVendorSpawnTicket(this.TVte.getPos(), 0, value));
                 }));
         this.minecraft.keyboardListener.enableRepeatEvents(true);
