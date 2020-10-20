@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "eki_lib:ticket_gate",
+    "eki_lib:ticket_vendor",
+    "eki_lib:station_nameplate"
+  ]
+}

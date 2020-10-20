@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "eki_lib:block/station_nameplate"
+    },
+    "facing=west": {
+      "model": "eki_lib:block/station_nameplate",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "eki_lib:block/station_nameplate",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "eki_lib:block/station_nameplate",
+      "y": 90
+    }
+  }
+}
