@@ -29,7 +29,7 @@ public class StationNameplateTileEntity extends TileEntity {
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
-        if (hasStation())
+        if (hasStationPos())
             compound.putIntArray("stationPos", UtilStationConverter.toINTarray(this.stationPos));
         return super.write(compound);
     }
@@ -52,12 +52,12 @@ public class StationNameplateTileEntity extends TileEntity {
         this.markDirty();
     }
 
-    public boolean hasStation() {
+    public boolean hasStationPos() {
         return this.stationPos != null;
     }
 
     public boolean checkStation() {
-        if (hasStation())
+        if (hasStationPos())
             return EkiLibApi.hasStation(this.stationPos);
         return false;
     }

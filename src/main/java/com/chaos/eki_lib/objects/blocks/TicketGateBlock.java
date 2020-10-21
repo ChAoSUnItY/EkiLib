@@ -329,7 +329,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                         if (nbt.contains("startPos")) {
                             BlockPos fromPos = UtilStationConverter.toBlockPos(nbt.getIntArray("startPos"));
                             double requiredPrice = UtilDistanceHelper.calculatePrice(
-                                    fromPos, TGte.hasStation() ? TGte.getStationPos() : pos);
+                                    fromPos, TGte.hasStationPos() ? TGte.getStationPos() : pos);
                             double value = nbt.getDouble("value");
                             if (value >= requiredPrice) {
                                 switch (ticket.getType()) {
@@ -346,7 +346,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                                 ITextComponent
                                         subtext = new TranslationTextComponent("eki_lib.message.unknown_station").mergeStyle(TextFormatting.ITALIC, TextFormatting.GRAY),
                                         from = nbt.contains("fromStation") ? new StringTextComponent(nbt.getString("fromStation")).mergeStyle(TextFormatting.BOLD) : new TranslationTextComponent("eki_lib.message.unknown_station").mergeStyle(TextFormatting.ITALIC, TextFormatting.GRAY);
-                                if (TGte.hasStation())
+                                if (TGte.hasStationPos())
                                     player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.exit", new StringTextComponent(TGte.getStation().getName()).mergeStyle(TextFormatting.BOLD), from).mergeStyle(TextFormatting.GREEN), true);
                                 else
                                     player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.exit", subtext, from).mergeStyle(TextFormatting.GREEN), true);
@@ -356,8 +356,8 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                                 player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.balance_shortage", requiredPrice, value), true);
                             }
                         } else {
-                            nbt.putIntArray("startPos", UtilStationConverter.toINTarray(TGte.hasStation() ? TGte.getStationPos() : pos));
-                            if (TGte.hasStation())
+                            nbt.putIntArray("startPos", UtilStationConverter.toINTarray(TGte.hasStationPos() ? TGte.getStationPos() : pos));
+                            if (TGte.hasStationPos())
                                 nbt.putString("fromStation", EkiLibApi.getStationByPosition(TGte.getStationPos(), UtilDimensionConverter.getDimensionID(worldIn)).get().getName());
                             if (ticket.getType() == 2) {
                                 stack.setTag(nbt);

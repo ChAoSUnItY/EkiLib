@@ -75,6 +75,9 @@ public class StationSelectionScreen extends BaseScreen {
                         20,
                         new TranslationTextComponent("eki_lib.screen.bind"),
                         v -> {
+                            if (this.list.getSelected() == null)
+                                return;
+
                             if (this.list.getSelected().station == null)
                                 return;
 

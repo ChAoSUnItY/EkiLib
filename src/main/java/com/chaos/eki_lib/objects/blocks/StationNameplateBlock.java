@@ -73,6 +73,9 @@ public class StationNameplateBlock extends HorizontalBaseBlock {
         TileEntity te = worldIn.getTileEntity(pos);
         if (player.getHeldItem(handIn).getItem() instanceof StationTunerItem && te instanceof StationNameplateTileEntity) {
             StationNameplateTileEntity SNte = (StationNameplateTileEntity) te;
+            if (!SNte.checkStation())
+                SNte.setStationPos(null);
+
             ItemStack stack = player.getHeldItem(handIn);
             if (!stack.hasTag()) {
                 player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.invalid_item").mergeStyle(TextFormatting.RED), true);

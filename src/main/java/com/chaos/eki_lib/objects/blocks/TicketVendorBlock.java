@@ -181,6 +181,9 @@ public class TicketVendorBlock extends HorizontalBaseBlock {
         TileEntity te = worldIn.getTileEntity(pos);
         if (te instanceof TicketVendorTileEntity) {
             TicketVendorTileEntity TVte = (TicketVendorTileEntity) te;
+            if (!TVte.checkStation())
+                TVte.setStationPos(null);
+
             if (stack.getItem() instanceof StationTunerItem) {
                 if (!stack.hasTag()) {
                     player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.invalid_item").mergeStyle(TextFormatting.RED), true);

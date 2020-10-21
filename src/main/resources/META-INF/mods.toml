@@ -1,7 +1,7 @@
 modLoader="javafml"
 loaderVersion="[34,)"
 license="All rights reserved"
-issueTrackerURL="http://example.com/"
+issueTrackerURL="https://github.com/ChAoSUnItY/EkiLib/issues"
 
 [[mods]]
 modId="eki_lib"
@@ -12,20 +12,13 @@ displayURL="http://example.com/"
 logoFile="examplemod.png"
 credits=""
 authors="ChAoS_UnItY"
-description='''Kt RIP'''
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.examplemod]] #optional
-    # the modid of the dependency
-    modId="forge" #mandatory
-    # Does this dependency have to exist - if not, ordering below must be specified
-    mandatory=true #mandatory
-    # The version range of the dependency
-    versionRange="[34,)" #mandatory
-    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+description='''A new generation of station system library in Minecraft!'''
+[[dependencies.examplemod]]
+    modId="forge"
+    mandatory=true
+    versionRange="[34,)"
     ordering="NONE"
-    # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
-# Here's another dependency
 [[dependencies.examplemod]]
     modId="minecraft"
     mandatory=true

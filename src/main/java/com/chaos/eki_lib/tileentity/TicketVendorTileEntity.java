@@ -73,7 +73,7 @@ public class TicketVendorTileEntity extends LockableLootTileEntity {
         super.write(compound);
         if (!this.checkLootAndWrite(compound))
             ItemStackHelper.saveAllItems(compound, this.vendorContent);
-        if (hasStation())
+        if (hasStationPos())
             compound.putIntArray("stationPos", UtilStationConverter.toINTarray(this.stationPos));
         return compound;
     }
@@ -99,12 +99,12 @@ public class TicketVendorTileEntity extends LockableLootTileEntity {
         this.markDirty();
     }
 
-    public boolean hasStation() {
+    public boolean hasStationPos() {
         return this.stationPos != null;
     }
 
     public boolean checkStation() {
-        if (hasStation())
+        if (hasStationPos())
             return EkiLibApi.hasStation(this.stationPos);
         return false;
     }

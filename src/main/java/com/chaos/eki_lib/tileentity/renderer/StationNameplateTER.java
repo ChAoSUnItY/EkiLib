@@ -29,8 +29,8 @@ public class StationNameplateTER extends TileEntityRenderer<StationNameplateTile
         matrixStackIn.scale(0.010416667F, -0.010416667F, 0.010416667F);
         matrixStackIn.scale(2F, 3F, 2F);
         FontRenderer fontRenderer = this.renderDispatcher.getFontRenderer();
-        String s = toUnicode(tileEntityIn.hasStation() ? tileEntityIn.getStation().getName() : "");
-        fontRenderer.renderString(toUnicode(tileEntityIn.hasStation() ? tileEntityIn.getStation().getName() : ""), -(fontRenderer.getStringWidth(s) / 2), -20, NativeImage.getCombined(1, 256, 256, 256), false, matrixStackIn.getLast().getMatrix(), bufferIn, false, 0, combinedLightIn);
+        String s = toUnicode(tileEntityIn.hasStationPos() ? tileEntityIn.getStation().getName() : "");
+        fontRenderer.renderString(toUnicode(tileEntityIn.hasStationPos() ? tileEntityIn.getStation().getName() : ""), -(fontRenderer.getStringWidth(s) / 2), -20, NativeImage.getCombined(1, 256, 256, 256), false, matrixStackIn.getLast().getMatrix(), bufferIn, false, 0, combinedLightIn);
         matrixStackIn.pop();
     }
 
