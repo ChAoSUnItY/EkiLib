@@ -35,7 +35,6 @@ import java.util.Map;
 @Mod(EkiLib.MODID)
 public class EkiLib {
     public static final String MODID = "eki_lib";
-    public static final String VERSION = "1.16.3-1.0.0";
     public static final Logger LOGGER = LogManager.getLogger("Eki Lib");
 
     public EkiLib() {
@@ -72,9 +71,6 @@ public class EkiLib {
     public void onWorldLoaded(WorldEvent.Load event) {
         if (!event.getWorld().isRemote() && event.getWorld() instanceof ServerWorld) {
             StationWorldData saver = StationWorldData.forWorld((ServerWorld) event.getWorld());
-
-            for (Station station : saver.stations)
-                LOGGER.info(station.getName() + " " + station.getFormattedPosition());
 
             StationHandler.INSTANCE.init(saver.stations);
         }

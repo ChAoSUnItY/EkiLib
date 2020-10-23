@@ -5,21 +5,21 @@ issueTrackerURL="https://github.com/ChAoSUnItY/EkiLib/issues"
 
 [[mods]]
 modId="eki_lib"
-version="1.16.3-1.0.0"
+version="1.0.1"
 displayName="Eki Lib"
 updateJSONURL="https://raw.githubusercontent.com/ChAoSUnItY/EkiLib/1.16.3/src/main/resources/update.json"
-displayURL="http://example.com/"
-logoFile="examplemod.png"
+displayURL="https://github.com/ChAoSUnItY/EkiLib"
+logoFile="Eki_Lib_Logo.png"
 credits=""
 authors="ChAoS_UnItY"
 description='''A new generation of station system library in Minecraft!'''
-[[dependencies.examplemod]]
+[[dependencies.eki_lib]]
     modId="forge"
     mandatory=true
     versionRange="[34,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.examplemod]]
+[[dependencies.eki_lib]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.16.3]"
