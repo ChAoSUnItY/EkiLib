@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/ChAoSUnItY/EkiLib/issues"
 
 [[mods]]
 modId="eki_lib"
-version="1.0.1"
+version="1.0.2"
 displayName="Eki Lib"
 updateJSONURL="https://raw.githubusercontent.com/ChAoSUnItY/EkiLib/1.16.3/src/main/resources/update.json"
 displayURL="https://github.com/ChAoSUnItY/EkiLib"
