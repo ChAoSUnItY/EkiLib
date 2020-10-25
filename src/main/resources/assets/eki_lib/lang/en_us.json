@@ -1,4 +1,5 @@
 {
+  "itemGroup.eki_lib_tab": "Eki Lib",
   "item.eki_lib.station_tuner": "Station Tuner",
   "item.eki_lib.ticket": "Ticket",
   "item.eki_lib.cut_ticket": "Cut Ticket",
@@ -18,6 +19,7 @@
   "eki_lib.screen.bind.description": "Binds the selected station to the station tuner you're holding.",
   "eki_lib.screen.bind_accept": "Successfully binds the selected station to the station tuner!",
   "eki_lib.screen.bind.warning": "You aren't holding a station tuner in your mainhand!",
+  "eki_lib.container.ticket_vendor": "Ticket Vendor",
   "eki_lib.message.invalid_item": "Invalid item! It may not contains required values.",
   "eki_lib.message.station_bind": "Successfully bind to the block with station: ",
   "eki_lib.message.no_longer_exists": "No longer exists",

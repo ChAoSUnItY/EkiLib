@@ -1,4 +1,5 @@
 {
+  "itemGroup.eki_lib_tab": "Eki Lib",
   "item.eki_lib.station_tuner": "車站綁定儀",
   "item.eki_lib.ticket": "車票",
   "item.eki_lib.cut_ticket": "使用過的車票",
@@ -18,6 +19,7 @@
   "eki_lib.screen.bind.description": "綁定選擇的車站至主手持的車站綁定儀",
   "eki_lib.screen.bind_accept": "成拱綁定雪則的車站至車站綁定儀",
   "eki_lib.screen.bind.warning": "主手未持有車站綁定儀!",
+  "eki_lib.container.ticket_vendor": "售票機",
   "eki_lib.message.invalid_item": "非法物品! 可能沒有包含所需的資訊以進行操作",
   "eki_lib.message.station_bind": "成功將車站綁定至該方塊: ",
   "eki_lib.message.no_longer_exists": "不再存在",

@@ -45,7 +45,7 @@ public class TicketVendorTileEntity extends LockableLootTileEntity {
 
     @Override
     protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent("eki_lib.container.example_chest");
+        return new TranslationTextComponent("eki_lib.container.ticket_vendor");
     }
 
     @Override

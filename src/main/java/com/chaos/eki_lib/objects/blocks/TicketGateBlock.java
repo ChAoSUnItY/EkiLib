@@ -48,7 +48,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
             Stream.of(
                     Block.makeCuboidShape(0.5, 3, 0.25, 2.5, 12.75, 15.75),
                     Block.makeCuboidShape(0.5, 0, 2, 3, 3, 14),
-                    Block.makeCuboidShape(15.5, 12.75, 0, 16, 15, 16),
+                    Block.makeCuboidShape(15.5, 12.75, 0, 16, 24, 16),
                     Block.makeCuboidShape(15.75, 3, 0, 16, 12.75, 16),
                     Block.makeCuboidShape(15.5, 6, 0, 15.75, 11, 9.25),
                     Block.makeCuboidShape(15.5, 6, 15.75, 15.75, 11, 16),
@@ -59,7 +59,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(15.5, 11, 0, 15.75, 12.75, 16),
                     Block.makeCuboidShape(0, 3, 0, 0.5, 12.75, 16),
                     Block.makeCuboidShape(15.5, 0, 2, 16, 3, 14),
-                    Block.makeCuboidShape(0, 12.75, 0, 0.5, 15, 16),
+                    Block.makeCuboidShape(0, 12.75, 0, 0.5, 24, 16),
                     Block.makeCuboidShape(0, 0, 2, 0.5, 3, 14),
                     Block.makeCuboidShape(0.5, 13, 12.75, 3, 13.25, 14),
                     Block.makeCuboidShape(0.5, 12.75, 5, 3, 13, 16),
@@ -71,13 +71,13 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(0.5, 3, 15.75, 3, 8, 16),
                     Block.makeCuboidShape(0.5, 8, 0, 3, 10.5, 0.25),
                     Block.makeCuboidShape(0.5, 8, 15.75, 3, 10.5, 16),
-                    Block.makeCuboidShape(9.25, 6, 9, 15.75, 11, 9.5),
-                    Block.makeCuboidShape(2.5, 6, 9, 9, 11, 9.5)
+                    Block.makeCuboidShape(9.25, 6, 9, 15.75, 24, 9.5),
+                    Block.makeCuboidShape(2.5, 6, 9, 9, 24, 9.5)
             ),
             Stream.of(
                     Block.makeCuboidShape(13.5, 3, 0.25, 15.5, 12.75, 15.75),
                     Block.makeCuboidShape(13, 0, 2, 15.5, 3, 14),
-                    Block.makeCuboidShape(0, 12.75, 0, 0.5, 15, 16),
+                    Block.makeCuboidShape(0, 12.75, 0, 0.5, 24, 16),
                     Block.makeCuboidShape(0, 3, 0, 0.25, 12.75, 16),
                     Block.makeCuboidShape(0.25, 6, 6.75, 0.5, 11, 16),
                     Block.makeCuboidShape(0.25, 6, 0, 0.5, 11, 0.25),
@@ -88,7 +88,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(0.25, 11, 0, 0.5, 12.75, 16),
                     Block.makeCuboidShape(15.5, 3, 0, 16, 12.75, 16),
                     Block.makeCuboidShape(0, 0, 2, 0.5, 3, 14),
-                    Block.makeCuboidShape(15.5, 12.75, 0, 16, 15, 16),
+                    Block.makeCuboidShape(15.5, 12.75, 0, 16, 24, 16),
                     Block.makeCuboidShape(15.5, 0, 2, 16, 3, 14),
                     Block.makeCuboidShape(13, 13, 2, 15.5, 13.25, 3.25),
                     Block.makeCuboidShape(13, 12.75, 0, 15.5, 13, 11),
@@ -100,13 +100,13 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(13, 3, 0, 15.5, 8, 0.25),
                     Block.makeCuboidShape(13, 8, 15.75, 15.5, 10.5, 16),
                     Block.makeCuboidShape(13, 8, 0, 15.5, 10.5, 0.25),
-                    Block.makeCuboidShape(0.25, 6, 6.5, 6.75, 11, 7),
-                    Block.makeCuboidShape(7, 6, 6.5, 13.5, 11, 7)
+                    Block.makeCuboidShape(0.25, 6, 6.5, 6.75, 24, 7),
+                    Block.makeCuboidShape(7, 6, 6.5, 13.5, 24, 7)
             ),
             Stream.of(
                     Block.makeCuboidShape(0.25, 3, 0.5, 15.75, 12.75, 2.5),
                     Block.makeCuboidShape(2, 0, 0.5, 14, 3, 3),
-                    Block.makeCuboidShape(0, 12.75, 15.5, 16, 15, 16),
+                    Block.makeCuboidShape(0, 12.75, 15.5, 16, 24, 16),
                     Block.makeCuboidShape(0, 3, 15.75, 16, 12.75, 16),
                     Block.makeCuboidShape(6.75, 6, 15.5, 16, 11, 15.75),
                     Block.makeCuboidShape(0, 6, 15.5, 0.25, 11, 15.75),
@@ -117,7 +117,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(0, 11, 15.5, 16, 12.75, 15.75),
                     Block.makeCuboidShape(0, 3, 0, 16, 12.75, 0.5),
                     Block.makeCuboidShape(2, 0, 15.5, 14, 3, 16),
-                    Block.makeCuboidShape(0, 12.75, 0, 16, 15, 0.5),
+                    Block.makeCuboidShape(0, 12.75, 0, 16, 24, 0.5),
                     Block.makeCuboidShape(2, 0, 0, 14, 3, 0.5),
                     Block.makeCuboidShape(2, 13, 0.5, 3.25, 13.25, 3),
                     Block.makeCuboidShape(0, 12.75, 0.5, 11, 13, 3),
@@ -129,13 +129,13 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(0, 3, 0.5, 0.25, 8, 3),
                     Block.makeCuboidShape(15.75, 8, 0.5, 16, 10.5, 3),
                     Block.makeCuboidShape(0, 8, 0.5, 0.25, 10.5, 3),
-                    Block.makeCuboidShape(6.5, 6, 9.25, 7, 11, 15.75),
-                    Block.makeCuboidShape(6.5, 6, 2.5, 7, 11, 9)
+                    Block.makeCuboidShape(6.5, 6, 9.25, 7, 24, 15.75),
+                    Block.makeCuboidShape(6.5, 6, 2.5, 7, 24, 9)
             ),
             Stream.of(
                     Block.makeCuboidShape(0.25, 3, 13.5, 15.75, 12.75, 15.5),
                     Block.makeCuboidShape(2, 0, 13, 14, 3, 15.5),
-                    Block.makeCuboidShape(0, 12.75, 0, 16, 15, 0.5),
+                    Block.makeCuboidShape(0, 12.75, 0, 16, 24, 0.5),
                     Block.makeCuboidShape(0, 3, 0, 16, 12.75, 0.25),
                     Block.makeCuboidShape(0, 6, 0.25, 9.25, 11, 0.5),
                     Block.makeCuboidShape(15.75, 6, 0.25, 16, 11, 0.5),
@@ -146,7 +146,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(0, 11, 0.25, 16, 12.75, 0.5),
                     Block.makeCuboidShape(0, 3, 15.5, 16, 12.75, 16),
                     Block.makeCuboidShape(2, 0, 0, 14, 3, 0.5),
-                    Block.makeCuboidShape(0, 12.75, 15.5, 16, 15, 16),
+                    Block.makeCuboidShape(0, 12.75, 15.5, 16, 24, 16),
                     Block.makeCuboidShape(2, 0, 15.5, 14, 3, 16),
                     Block.makeCuboidShape(12.75, 13, 13, 14, 13.25, 15.5),
                     Block.makeCuboidShape(5, 12.75, 13, 16, 13, 15.5),
@@ -158,8 +158,8 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(15.75, 3, 13, 16, 8, 15.5),
                     Block.makeCuboidShape(0, 8, 13, 0.25, 10.5, 15.5),
                     Block.makeCuboidShape(15.75, 8, 13, 16, 10.5, 15.5),
-                    Block.makeCuboidShape(9, 6, 0.25, 9.5, 11, 6.75),
-                    Block.makeCuboidShape(9, 6, 7, 9.5, 11, 13.5)
+                    Block.makeCuboidShape(9, 6, 0.25, 9.5, 24, 6.75),
+                    Block.makeCuboidShape(9, 6, 7, 9.5, 24, 13.5)
             ));
 
     public static final HorizontalVoxelShapes OPENED_SHAPES = new HorizontalVoxelShapes(
@@ -168,7 +168,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(15.25, 6, 9.25, 15.75, 11, 15.75),
                     Block.makeCuboidShape(0.5, 3, 0.25, 2.5, 12.75, 15.75),
                     Block.makeCuboidShape(0.5, 0, 2, 3, 3, 14),
-                    Block.makeCuboidShape(15.5, 12.75, 0, 16, 15, 16),
+                    Block.makeCuboidShape(15.5, 12.75, 0, 16, 24, 16),
                     Block.makeCuboidShape(15.75, 3, 0, 16, 12.75, 16),
                     Block.makeCuboidShape(15.5, 6, 0, 15.75, 11, 9.25),
                     Block.makeCuboidShape(15.5, 6, 15.75, 15.75, 11, 16),
@@ -179,7 +179,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(2.75, 11, 0.25, 3, 12.75, 15.75),
                     Block.makeCuboidShape(15.5, 0, 2, 16, 3, 14),
                     Block.makeCuboidShape(0, 3, 0, 0.5, 12.75, 16),
-                    Block.makeCuboidShape(0, 12.75, 0, 0.5, 15, 16),
+                    Block.makeCuboidShape(0, 12.75, 0, 0.5, 24, 16),
                     Block.makeCuboidShape(0, 0, 2, 0.5, 3, 14),
                     Block.makeCuboidShape(0.5, 13, 12.75, 3, 13.25, 14),
                     Block.makeCuboidShape(0.5, 12.75, 5, 3, 13, 16),
@@ -197,7 +197,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(0.25, 6, 0.25, 0.75, 11, 6.75),
                     Block.makeCuboidShape(13.5, 3, 0.25, 15.5, 12.75, 15.75),
                     Block.makeCuboidShape(13, 0, 2, 15.5, 3, 14),
-                    Block.makeCuboidShape(0, 12.75, 0, 0.5, 15, 16),
+                    Block.makeCuboidShape(0, 12.75, 0, 0.5, 24, 16),
                     Block.makeCuboidShape(0, 3, 0, 0.25, 12.75, 16),
                     Block.makeCuboidShape(0.25, 6, 6.75, 0.5, 11, 16),
                     Block.makeCuboidShape(0.25, 6, 0, 0.5, 11, 0.25),
@@ -208,7 +208,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(13, 11, 0.25, 13.25, 12.75, 15.75),
                     Block.makeCuboidShape(0, 0, 2, 0.5, 3, 14),
                     Block.makeCuboidShape(15.5, 3, 0, 16, 12.75, 16),
-                    Block.makeCuboidShape(15.5, 12.75, 0, 16, 15, 16),
+                    Block.makeCuboidShape(15.5, 12.75, 0, 16, 24, 16),
                     Block.makeCuboidShape(15.5, 0, 2, 16, 3, 14),
                     Block.makeCuboidShape(13, 13, 2, 15.5, 13.25, 3.25),
                     Block.makeCuboidShape(13, 12.75, 0, 15.5, 13, 11),
@@ -226,7 +226,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(0.25, 6, 15.25, 6.75, 11, 15.75),
                     Block.makeCuboidShape(0.25, 3, 0.5, 15.75, 12.75, 2.5),
                     Block.makeCuboidShape(2, 0, 0.5, 14, 3, 3),
-                    Block.makeCuboidShape(0, 12.75, 15.5, 16, 15, 16),
+                    Block.makeCuboidShape(0, 12.75, 15.5, 16, 24, 16),
                     Block.makeCuboidShape(0, 3, 15.75, 16, 12.75, 16),
                     Block.makeCuboidShape(6.75, 6, 15.5, 16, 11, 15.75),
                     Block.makeCuboidShape(0, 6, 15.5, 0.25, 11, 15.75),
@@ -237,7 +237,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(0.25, 11, 2.75, 15.75, 12.75, 3),
                     Block.makeCuboidShape(2, 0, 15.5, 14, 3, 16),
                     Block.makeCuboidShape(0, 3, 0, 16, 12.75, 0.5),
-                    Block.makeCuboidShape(0, 12.75, 0, 16, 15, 0.5),
+                    Block.makeCuboidShape(0, 12.75, 0, 16, 24, 0.5),
                     Block.makeCuboidShape(2, 0, 0, 14, 3, 0.5),
                     Block.makeCuboidShape(2, 13, 0.5, 3.25, 13.25, 3),
                     Block.makeCuboidShape(0, 12.75, 0.5, 11, 13, 3),
@@ -255,7 +255,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(9.25, 6, 0.25, 15.75, 11, 0.75),
                     Block.makeCuboidShape(0.25, 3, 13.5, 15.75, 12.75, 15.5),
                     Block.makeCuboidShape(2, 0, 13, 14, 3, 15.5),
-                    Block.makeCuboidShape(0, 12.75, 0, 16, 15, 0.5),
+                    Block.makeCuboidShape(0, 12.75, 0, 16, 24, 0.5),
                     Block.makeCuboidShape(0, 3, 0, 16, 12.75, 0.25),
                     Block.makeCuboidShape(0, 6, 0.25, 9.25, 11, 0.5),
                     Block.makeCuboidShape(15.75, 6, 0.25, 16, 11, 0.5),
@@ -266,7 +266,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                     Block.makeCuboidShape(0.25, 11, 13, 15.75, 12.75, 13.25),
                     Block.makeCuboidShape(2, 0, 0, 14, 3, 0.5),
                     Block.makeCuboidShape(0, 3, 15.5, 16, 12.75, 16),
-                    Block.makeCuboidShape(0, 12.75, 15.5, 16, 15, 16),
+                    Block.makeCuboidShape(0, 12.75, 15.5, 16, 24, 16),
                     Block.makeCuboidShape(2, 0, 15.5, 14, 3, 16),
                     Block.makeCuboidShape(12.75, 13, 13, 14, 13.25, 15.5),
                     Block.makeCuboidShape(5, 12.75, 13, 16, 13, 15.5),
@@ -388,18 +388,10 @@ public class TicketGateBlock extends HorizontalBaseBlock {
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        if (state.get(OPEN))
-            return VoxelShapes.empty();
-        return COLLISION_SHAPE;
-    }
-
-    @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         if (state.get(OPEN))
             return OPENED_SHAPES.getByDirection(state.get(FACING));
-        else
-            return UNOPENED_SHAPES.getByDirection(state.get(FACING));
+        return UNOPENED_SHAPES.getByDirection(state.get(FACING));
     }
 
     @Override
