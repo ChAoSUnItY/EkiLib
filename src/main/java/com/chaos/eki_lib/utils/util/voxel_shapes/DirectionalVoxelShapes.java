@@ -1,5 +1,6 @@
 package com.chaos.eki_lib.utils.util.voxel_shapes;
 
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -17,6 +18,24 @@ public class DirectionalVoxelShapes {
             throw new IllegalStateException("DirectionalVoxelShapes only takes four Streams of VoxelShape");
         for (int i = 0; i < 6; i++)
             this.shapes[i] = shapesStream[i].reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get();
+    }
+
+    public VoxelShape getByDirection(Direction direction) {
+        switch (direction) {
+            case SOUTH:
+                return getSouth();
+            case EAST:
+                return getEast();
+            case WEST:
+                return getWest();
+            case UP:
+                return getUp();
+            case DOWN:
+                return getDown();
+            case NORTH:
+            default:
+                return getNorth();
+        }
     }
 
     public VoxelShape getNorth() {

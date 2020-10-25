@@ -97,23 +97,8 @@ public class StationNameplateBlock extends HorizontalBaseBlock {
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
-    }
-
-    @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.get(FACING)) {
-            case SOUTH:
-                return SHAPES.getSouth();
-            case EAST:
-                return SHAPES.getEast();
-            case WEST:
-                return SHAPES.getWest();
-            case NORTH:
-            default:
-                return SHAPES.getNorth();
-        }
+        return SHAPES.getByDirection(state.get(FACING));
     }
 
     @Override

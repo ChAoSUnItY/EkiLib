@@ -397,29 +397,9 @@ public class TicketGateBlock extends HorizontalBaseBlock {
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         if (state.get(OPEN))
-            switch (state.get(FACING)) {
-                case SOUTH:
-                    return OPENED_SHAPES.getSouth();
-                case EAST:
-                    return OPENED_SHAPES.getEast();
-                case WEST:
-                    return OPENED_SHAPES.getWest();
-                case NORTH:
-                default:
-                    return OPENED_SHAPES.getNorth();
-            }
+            return OPENED_SHAPES.getByDirection(state.get(FACING));
         else
-            switch (state.get(FACING)) {
-                case SOUTH:
-                    return UNOPENED_SHAPES.getSouth();
-                case EAST:
-                    return UNOPENED_SHAPES.getEast();
-                case WEST:
-                    return UNOPENED_SHAPES.getWest();
-                case NORTH:
-                default:
-                    return UNOPENED_SHAPES.getNorth();
-            }
+            return UNOPENED_SHAPES.getByDirection(state.get(FACING));
     }
 
     @Override
