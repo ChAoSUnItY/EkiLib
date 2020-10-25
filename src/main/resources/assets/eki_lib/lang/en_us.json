@@ -7,6 +7,7 @@
   "block.eki_lib.ticket_vendor": "Ticket Vendor",
   "block.eki_lib.ticket_gate": "Ticket Gate",
   "block.eki_lib.station_nameplate": "Station Nameplate",
+  "eki_lib.tooltip.balance": "Ticket Balance: %f",
   "eki_lib.screen.modify_station": "Create / Modify Station",
   "eki_lib.screen.station_selection": "Stations",
   "eki_lib.screen.create_modify": "Create / Modify",

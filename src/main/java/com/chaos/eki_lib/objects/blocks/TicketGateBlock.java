@@ -27,7 +27,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -43,7 +42,7 @@ import java.util.stream.Stream;
 
 public class TicketGateBlock extends HorizontalBaseBlock {
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
-    public static final VoxelShape COLLISION_SHAPE = Block.makeCuboidShape(0, 0, 0, 16, 24, 16);
+
     public static final HorizontalVoxelShapes UNOPENED_SHAPES = new HorizontalVoxelShapes(
             Stream.of(
                     Block.makeCuboidShape(0.5, 3, 0.25, 2.5, 12.75, 15.75),
@@ -389,9 +388,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        if (state.get(OPEN))
-            return OPENED_SHAPES.getByDirection(state.get(FACING));
-        return UNOPENED_SHAPES.getByDirection(state.get(FACING));
+        return state.get(OPEN) ? OPENED_SHAPES.getByDirection(state.get(FACING)) : UNOPENED_SHAPES.getByDirection(state.get(FACING));
     }
 
     @Override

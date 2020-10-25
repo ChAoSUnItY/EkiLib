@@ -22,7 +22,7 @@ public class TicketItem extends BaseItem {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("eki_lib.tooltip.balance", stack.getTag().getInt("Number")).mergeStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent("eki_lib.tooltip.balance", stack.getTag().getDouble("value")).mergeStyle(TextFormatting.GRAY));
     }
 
     public int getType() {
