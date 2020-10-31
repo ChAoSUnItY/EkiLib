@@ -5,6 +5,7 @@ import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class DirectionalVoxelShapes {
@@ -14,10 +15,18 @@ public class DirectionalVoxelShapes {
      * @param shapesStream, the sequence to resolve is North -> South -> East -> West -> Up -> Down, otherwise it would return wrong VoxelShape when you call.
      */
     public DirectionalVoxelShapes(Stream<VoxelShape>... shapesStream) {
-        if (shapesStream.length != 4)
-            throw new IllegalStateException("DirectionalVoxelShapes only takes four Streams of VoxelShape");
+        this(Arrays.stream(shapesStream)
+                .map(stream ->
+                        stream.reduce((v1, v2) ->
+                                VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get())
+                .toArray(VoxelShape[]::new));
+    }
+
+    public DirectionalVoxelShapes(VoxelShape... shapes) {
+        if (shapes.length != 6)
+            throw new IllegalStateException("DirectionalVoxelShapes only takes six Streams of VoxelShape");
         for (int i = 0; i < 6; i++)
-            this.shapes[i] = shapesStream[i].reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get();
+            this.shapes[i] = shapes[i];
     }
 
     public VoxelShape getByDirection(Direction direction) {
@@ -54,7 +63,11 @@ public class DirectionalVoxelShapes {
         return this.shapes[3];
     }
 
-    public VoxelShape getUp() { return this.shapes[4]; }
+    public VoxelShape getUp() {
+        return this.shapes[4];
+    }
 
-    public VoxelShape getDown() { return this.shapes[5]; }
+    public VoxelShape getDown() {
+        return this.shapes[5];
+    }
 }

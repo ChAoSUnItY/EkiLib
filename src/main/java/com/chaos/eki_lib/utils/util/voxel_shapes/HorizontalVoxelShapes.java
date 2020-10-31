@@ -5,6 +5,7 @@ import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class HorizontalVoxelShapes {
@@ -14,10 +15,18 @@ public class HorizontalVoxelShapes {
      * @param shapesStream, the sequence to resolve is North -> South -> East -> West, otherwise it would return wrong VoxelShape when you call.
      */
     public HorizontalVoxelShapes(Stream<VoxelShape>... shapesStream) {
-        if (shapesStream.length != 4)
-            throw new IllegalStateException("HorizontalVoxelShapes only takes four Streams of VoxelShape");
+        this(Arrays.stream(shapesStream)
+                .map(stream ->
+                        stream.reduce((v1, v2) ->
+                                VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get())
+                .toArray(VoxelShape[]::new));
+    }
+
+    public HorizontalVoxelShapes(VoxelShape... shapes) {
+        if (shapes.length != 4)
+            throw new IllegalStateException("DirectionalVoxelShapes only takes six Streams of VoxelShape");
         for (int i = 0; i < 4; i++)
-            this.shapes[i] = shapesStream[i].reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get();
+            this.shapes[i] = shapes[i];
     }
 
     public VoxelShape getByDirection(Direction direction) {
