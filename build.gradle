@@ -8,11 +8,15 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
+plugins {
+    id "com.matthewprenger.cursegradle" version "1.4.0"
+}
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0.4'
+version = '1.0.6'
 group = 'com.chaos.eki_lib' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'EkiLib'
 
@@ -101,5 +105,18 @@ publishing {
         maven {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
+    }
+}
+
+curseforge {
+    apiKey = "6bfce014-6777-4b76-a6b0-d2620c867905"
+    project {
+        id = "414684"
+        releaseType = "beta"
+        changelogType = "markdown"
+        changelog = project.version + " Beta\n==================\n"
+        addGameVersion "1.16"
+        addGameVersion "Java 8"
+        mainArtifact jar
     }
 }

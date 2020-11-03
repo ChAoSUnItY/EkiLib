@@ -7,6 +7,7 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
@@ -50,11 +51,10 @@ public class UtilSubblockRegistry<A extends Block> {
                         IntStream.range(0, enumsB.length)
                                 .forEach(j -> {
                                     final String name = baseName + "_" + enumsA[i].getString() + "_" + enumsB[j].getString();
-                                    blocksToAssign[i * enumsA.length + j] = deferredRegisterBlock.register(name,
+                                    blocksToAssign[i * enumsB.length + j] = deferredRegisterBlock.register(name,
                                             blockIniter);
-                                    itemsToAssign[i * enumsA.length + j] = deferredRegisterItem.register(name,
-                                            () -> new BlockItem(blocksToAssign[i * enumsA.length + j].get(), itemProp));
+                                    itemsToAssign[i * enumsB.length + j] = deferredRegisterItem.register(name,
+                                            () -> new BlockItem(blocksToAssign[i * enumsB.length + j].get(), itemProp));
                                 }));
-
     }
 }
