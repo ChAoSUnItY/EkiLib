@@ -15,7 +15,7 @@ jobs:
           java-version: '8'
           java-package: jdk
           architecture: x64
-      - run: ./gradlew build
+      - run: gradlew build
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Create Release
