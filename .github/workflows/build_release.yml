@@ -15,7 +15,9 @@ jobs:
           java-version: '8'
           java-package: jdk
           architecture: x64
-      - run: gradlew build
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: build
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Create Release
