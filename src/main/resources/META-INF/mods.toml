@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[34,)"
-license="All rights reserved"
+license="MIT"
 issueTrackerURL="https://github.com/ChAoSUnItY/EkiLib/issues"
 
 [[mods]]
