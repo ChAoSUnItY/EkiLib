@@ -64,7 +64,7 @@ public class RegistryCollection<T extends Block> {
                             Item.Properties prop,
                             DeferredRegister<Item> deferredRegister) {
             this.BLOCK = BLOCK;
-            this.BLOCK_ITEM = deferredRegister.register(name, () -> new BlockItem(this.BLOCK.get(), prop));
+            this.BLOCK_ITEM = deferredRegister.register(BLOCK.getId().getPath(), () -> new BlockItem(this.BLOCK.get(), prop));
         }
 
         public RegistryObject<B> getBlock() {
