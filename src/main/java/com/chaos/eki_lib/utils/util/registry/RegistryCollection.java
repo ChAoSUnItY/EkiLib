@@ -16,7 +16,6 @@ import java.util.function.Supplier;
 
 public class RegistryCollection<T extends Block> {
     protected final String name;
-    private final Pair<DeferredRegister<Block>, DeferredRegister<Item>> deferredRegisters;
     private final AbstractBlock.Properties blkProp;
     private final ItemGroup group;
     protected RegistryPair<T> BASE_BLOCK;
@@ -25,25 +24,20 @@ public class RegistryCollection<T extends Block> {
 
     private RegistryCollection(String name,
                                AbstractBlock.Properties blockProperties,
-                               ItemGroup group,
-                               Pair<DeferredRegister<Block>, DeferredRegister<Item>> deferredRegisters) {
+                               ItemGroup group) {
         this.name = name;
-        this.deferredRegisters = deferredRegisters;
         this.blkProp = blockProperties;
         this.group = group;
     }
 
-    public static RegistryCollection create(String name,
-                                            AbstractBlock.Properties blockProperties,
-                                            ItemGroup group,
-                                            Pair<DeferredRegister<Block>, DeferredRegister<Item>> deferredRegisters) {
-        return new RegistryCollection(name, blockProperties, group, deferredRegisters);
+    public static RegistryCollection create(final String name,
+                                            final AbstractBlock.Properties blockProperties,
+                                            final ItemGroup group) {
+        return new RegistryCollection(name, blockProperties, group);
     }
 
-    public RegistryCollection<T> init(Supplier<T> blkConstructor) {
+    public RegistryCollection<T> init(final Supplier<T> blkConstructor, final DeferredRegister<Block> blkReg, final DeferredRegister<Item> itemReg) {
         final Item.Properties item = new Item.Properties().group(this.group);
-        final DeferredRegister<Block> blkReg = deferredRegisters.getKey();
-        final DeferredRegister<Item> itemReg = deferredRegisters.getValue();
         this.BASE_BLOCK = new RegistryPair(
                 blkReg.register(this.name, blkConstructor),
                 item,
