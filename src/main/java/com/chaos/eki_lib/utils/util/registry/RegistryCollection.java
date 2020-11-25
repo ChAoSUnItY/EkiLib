@@ -1,8 +1,6 @@
 package com.chaos.eki_lib.utils.util.registry;
 
 import com.chaos.eki_lib.objects.blocks.SideSlabBlock;
-import com.chaos.eki_lib.objects.blocks.base.BaseBlock;
-import javafx.util.Pair;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SlabBlock;
@@ -67,16 +65,32 @@ public class RegistryCollection<T extends Block> {
         return BASE_BLOCK;
     }
 
+    public T getBase() {
+        return getBaseBlock().getBlock().get();
+    }
+
     public RegistryPair<? extends StairsBlock> getStairsBlock() {
         return STAIRS_BLOCK;
+    }
+
+    public <I extends StairsBlock> I getStairs() {
+        return (I) getStairsBlock().getBlock().get();
     }
 
     public RegistryPair<? extends SlabBlock> getSlabBlock() {
         return SLAB_BLOCK;
     }
 
+    public <J extends SlabBlock> J getSlab() {
+        return (J) getSlabBlock().getBlock().get();
+    }
+
     public RegistryPair<? extends SideSlabBlock> getSideSlabBlock() {
         return SIDE_SLAB_BLOCK;
+    }
+
+    public <K extends SideSlabBlock> K getSideSlab() {
+        return (K) getSideSlabBlock().getBlock().get();
     }
 
     public class RegistryPair<B extends Block> {
