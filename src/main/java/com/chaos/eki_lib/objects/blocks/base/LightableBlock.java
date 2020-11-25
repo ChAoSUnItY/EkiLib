@@ -9,13 +9,13 @@ public class LightableBlock extends BaseBlock {
         return p.setLightLevel(s -> l);
     }
 
-    public class LightableHorizontalBlock extends HorizontalBaseBlock {
+    public static class LightableHorizontalBlock extends HorizontalBaseBlock {
         public LightableHorizontalBlock(Properties properties, int light) {
             super(setLightLevel(properties, light));
         }
     }
 
-    public class LightableDirectionalBlock extends DirectionalBaseBlock {
+    public static class LightableDirectionalBlock extends DirectionalBaseBlock {
         public LightableDirectionalBlock(Properties properties, int light) {
             super(setLightLevel(properties, light));
         }
