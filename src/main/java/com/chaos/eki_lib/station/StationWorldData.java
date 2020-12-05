@@ -40,14 +40,12 @@ public class StationWorldData extends WorldSavedData implements Supplier<Station
         return compound;
     }
 
-    public static StationWorldData forWorld(ServerWorld world)
-    {
+    public static StationWorldData forWorld(ServerWorld world) {
         DimensionSavedDataManager storage = world.getSavedData();
         Supplier<StationWorldData> sup = new StationWorldData();
         StationWorldData saver = (StationWorldData) storage.getOrCreate(sup, EkiLib.MODID);
 
-        if (saver == null)
-        {
+        if (saver == null) {
             saver = new StationWorldData();
             storage.set(saver);
         }

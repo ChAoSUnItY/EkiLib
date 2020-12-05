@@ -13,14 +13,10 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.forgespi.language.IModInfo;
 import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(modid = EkiLib.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -38,6 +34,8 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
+        RenderTypeLookup.setRenderLayer(RegistryHandler.STATION_NAME_PLATE.get(), RenderType.getSolid());
+
         ClientRegistry.bindTileEntityRenderer(TileEntityHandler.STATION_NAMEPLATE.get(), StationNameplateTER::new);
         ScreenManager.registerFactory(ContainerHandler.TICKET_VENDOR_CONTAINER.get(), TicketVendorScreen::new);
         MinecraftForge.EVENT_BUS.addListener(ClientHandler::onClientTick);

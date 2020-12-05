@@ -16,7 +16,9 @@ public class EkiLibApi {
         StationHandler.INSTANCE.reload(stations);
     }
 
-    public static boolean hasStation(BlockPos pos) { return StationHandler.INSTANCE.has(pos); }
+    public static boolean hasStation(BlockPos pos) {
+        return StationHandler.INSTANCE.has(pos);
+    }
 
     public static Optional<Station> getStationByPosition(BlockPos pos, int dimID) {
         return StationHandler.INSTANCE.getStations().stream().filter(station -> station.getPosition().equals(pos) && station.getDimensionID() == dimID).findFirst();

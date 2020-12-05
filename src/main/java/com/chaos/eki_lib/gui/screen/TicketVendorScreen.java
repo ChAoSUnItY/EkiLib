@@ -70,7 +70,6 @@ public class TicketVendorScreen extends ContainerScreen<TicketVendorContainer> {
         this.children.add(this.priceInputTextField);
 
         this.confirmedButton.active = !this.priceInputTextField.getText().isEmpty();
-        this.priceInputTextField.mouseClicked(this.guiLeft + 19, this.guiTop + 33, 1);
     }
 
     @Override

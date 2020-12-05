@@ -12,17 +12,14 @@ Firstly, Eki Lib doesn't have a maven repo. Instead, you can use CurseMaven to i
 Step 1: Add the following code to your build.gradle without modified any other setting from ForgeGradle
 ```
 repositories {
-    maven {
-        url = "https://www.cursemaven.com"
-    }
+    maven { url 'https://jitpack.io' }
 }
 ```
 
-Step 2: Add target version of Eki Lib, see [cursemaven](https://www.cursemaven.com/) for more information.
-The following example will add [this Eki Lib file](https://www.curseforge.com/minecraft/mc-mods/eki-lib/files/3089443) to your project.
+Step 2: Add target version of Eki Lib, see Releases in [Eki Lib]("https://github.com/ChAoSUnItY/EkiLib") for versions.
 ```
 dependencies {
-    deobfCompile "curse.maven:eki-lib:3089443"
+    compile fg.deobf('com.github.ChAoSUnItY:EkiLib:EKI_LIB_VERSION_HERE')
 }
 ```
 

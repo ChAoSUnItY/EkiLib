@@ -1,6 +1,7 @@
 {
   "itemGroup.eki_lib_tab": "Eki Lib",
   "item.eki_lib.station_tuner": "車站綁定儀",
+  "item.eki_lib.station_tuner.tooltip": "綁定至 %s (%d, %d, %d)",
   "item.eki_lib.ticket": "車票",
   "item.eki_lib.cut_ticket": "使用過的車票",
   "item.eki_lib.ic_ticket": "儲值智慧卡",

@@ -23,7 +23,7 @@ public class DirectionalBaseBlock extends BaseBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(FACING, context.getFace().getOpposite());
+        return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
     }
 
     @Override
