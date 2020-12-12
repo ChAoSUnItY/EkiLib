@@ -7,7 +7,7 @@ A minecraft library provides modern station system.
 * **Ticket System** -  
 *Having trouble to keep up railway without fine income? <br> Don't worry! Now you can have sell ticket and force them to pass the ticket gate!*  
 ### Adding Eki Lib to your project
-Firstly, Eki Lib doesn't have a maven repo. Instead, you can use CurseMaven to include the library.
+Firstly, Eki Lib doesn't have a maven repo. Instead, you can use JitPack to include the library in your mod.
 
 Step 1: Add the following code to your build.gradle without modified any other setting from ForgeGradle
 ```
