@@ -31,7 +31,7 @@ public class RegistryHandler {
     public static final RegistryObject<StationNameplateBlock> STATION_NAME_PLATE = BLOCKS.register("station_nameplate", StationNameplateBlock::new);
 
     // BLOCK ITEM
-    public static final RegistryObject<BlockItem> TICKET_GATE_ITEM = ITEMS.register("ticket_gate.json",
+    public static final RegistryObject<BlockItem> TICKET_GATE_ITEM = ITEMS.register("ticket_gate",
             () -> new BlockItem(TICKET_GATE.get(), DEFAULT_ITEM_BLOCK_PROPERTIES));
     public static final RegistryObject<BlockItem> TICKET_VENDOR_ITEM = ITEMS.register("ticket_vendor",
             () -> new BlockItem(TICKET_VENDOR.get(), DEFAULT_ITEM_BLOCK_PROPERTIES));
