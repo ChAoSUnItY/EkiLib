@@ -12,6 +12,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.list.ExtendedList;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -24,8 +25,8 @@ public class StationSelectionScreen extends BaseScreen {
     private Button bindButton;
     private StationSelectionScreen.List list;
 
-    public StationSelectionScreen(Screen previous, int dimID, PlayerEntity player) {
-        super(new TranslationTextComponent("eki_lib.screen.station_selection"), previous, dimID, player);
+    public StationSelectionScreen(Screen previous, ResourceLocation dimension, PlayerEntity player) {
+        super(new TranslationTextComponent("eki_lib.screen.station_selection"), previous, dimension, player);
     }
 
     @Override
@@ -43,14 +44,14 @@ public class StationSelectionScreen extends BaseScreen {
                                 this.minecraft.displayGuiScreen(
                                         new ModifyStationScreen(
                                                 this,
-                                                this.dimID,
+                                                this.dimension,
                                                 this.player,
                                                 this.list.getSelected().station));
                             else
                                 this.minecraft.displayGuiScreen(
                                         new ModifyStationScreen(
                                                 this,
-                                                this.dimID,
+                                                this.dimension,
                                                 this.player
                                         )
                                 );
@@ -132,7 +133,7 @@ public class StationSelectionScreen extends BaseScreen {
         public List(Minecraft mcIn) {
             super(mcIn, StationSelectionScreen.this.width, StationSelectionScreen.this.height, 32, StationSelectionScreen.this.height - 65 + 4, 18);
 
-            for (Station station : EkiLibApi.getStationList(StationSelectionScreen.this.dimID)) {
+            for (Station station : EkiLibApi.getStationList(StationSelectionScreen.this.dimension)) {
                 this.addEntry(new StationEntry(station));
             }
 

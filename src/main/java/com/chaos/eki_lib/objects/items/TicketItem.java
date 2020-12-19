@@ -1,6 +1,7 @@
 package com.chaos.eki_lib.objects.items;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -17,6 +18,11 @@ public class TicketItem extends BaseItem {
     public TicketItem(int type) {
         super(new Item.Properties().maxStackSize(1).maxDamage(1));
         this.type = type;
+    }
+
+    @Override
+    public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
+        super.onCreated(stack, worldIn, playerIn);
     }
 
     @Override

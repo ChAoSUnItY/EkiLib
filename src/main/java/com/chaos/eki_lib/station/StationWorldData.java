@@ -6,6 +6,8 @@ import com.chaos.eki_lib.utils.util.UtilStationConverter;
 import com.google.common.collect.Lists;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.WorldSavedData;
@@ -29,7 +31,7 @@ public class StationWorldData extends WorldSavedData implements Supplier<Station
     @Override
     public void read(CompoundNBT nbt) {
         ListNBT list = nbt.getList(LIST_NAME, Constants.NBT.TAG_COMPOUND);
-        list.forEach(compound -> stations.add(UtilStationConverter.toStation((CompoundNBT) compound)));
+        list.forEach(compound -> stations.add(new StationWorldDataFixer((CompoundNBT) compound).tryFix().getStation()));
     }
 
     @Override
@@ -43,17 +45,44 @@ public class StationWorldData extends WorldSavedData implements Supplier<Station
     public static StationWorldData forWorld(ServerWorld world) {
         DimensionSavedDataManager storage = world.getSavedData();
         Supplier<StationWorldData> sup = new StationWorldData();
-        StationWorldData saver = (StationWorldData) storage.getOrCreate(sup, EkiLib.MODID);
 
-        if (saver == null) {
-            saver = new StationWorldData();
-            storage.set(saver);
-        }
-        return saver;
+        return storage.getOrCreate(sup, EkiLib.MODID);
     }
 
     @Override
     public StationWorldData get() {
         return this;
+    }
+
+    public static class StationWorldDataFixer {
+        private final CompoundNBT nbt;
+
+        public StationWorldDataFixer(CompoundNBT oldStationData) {
+            nbt = oldStationData;
+        }
+
+        public StationWorldDataFixer tryFix() {
+            if (nbt.contains("Dimension ID", Constants.NBT.TAG_INT)) {
+                nbt.putString(UtilStationConverter.DIMENSION, convertIDtoResourceLocation(nbt.getInt("Dimension ID")).toString());
+                nbt.remove("Dimension ID");
+            }
+            return this;
+        }
+
+        public Station getStation() {
+            return UtilStationConverter.toStation(nbt);
+        }
+
+        public ResourceLocation convertIDtoResourceLocation(int id) {
+            switch (id) {
+                case -1:
+                    return World.THE_NETHER.getLocation();
+                case 0:
+                    return World.OVERWORLD.getLocation();
+                case 1:
+                default:
+                    return World.THE_END.getLocation();
+            }
+        }
     }
 }

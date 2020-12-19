@@ -4,6 +4,7 @@ import com.chaos.eki_lib.objects.blocks.base.HorizontalBaseBlock;
 import com.chaos.eki_lib.objects.items.StationTunerItem;
 import com.chaos.eki_lib.tileentity.TicketVendorTileEntity;
 import com.chaos.eki_lib.utils.handlers.TileEntityHandler;
+import com.chaos.eki_lib.utils.util.UtilCastMagic;
 import com.chaos.eki_lib.utils.util.UtilStationConverter;
 import com.chaos.eki_lib.utils.util.voxel_shapes.HorizontalVoxelShapes;
 import net.minecraft.block.AbstractBlock;
@@ -191,7 +192,7 @@ public class TicketVendorBlock extends HorizontalBaseBlock {
                 }
 
                 CompoundNBT nbt = stack.getTag();
-                if (nbt.contains(UtilStationConverter.POSITION)) {
+                if (UtilCastMagic.castItem(StationTunerItem.class, stack.getItem()).getStation(nbt, worldIn).isPresent() && nbt.contains(UtilStationConverter.POSITION)) {
                     TVte.setStationPos(UtilStationConverter.toBlockPos(nbt, UtilStationConverter.POSITION));
                     player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.station_bind")
                             .append(new StringTextComponent(TVte.getStation().getName()).mergeStyle(TextFormatting.BOLD))

@@ -29,7 +29,7 @@ public class PacketBindTuner implements IPacketBase {
     public static void handle(PacketBindTuner pkg, Supplier<NetworkEvent.Context> ctx) {
         if (IPacketBase.handleInSide(ctx, Dist.DEDICATED_SERVER)) {
             CompoundNBT nbt = new CompoundNBT();
-            nbt.putIntArray(UtilStationConverter.POSITION, UtilStationConverter.toINTarray(pkg.targetStation.getPosition()));
+            nbt.putIntArray(UtilStationConverter.POSITION, UtilStationConverter.toIntegerArray(pkg.targetStation.getPosition()));
             ctx.get().enqueueWork(() -> ctx.get().getSender().getHeldItemMainhand().setTag(nbt));
         }
     }

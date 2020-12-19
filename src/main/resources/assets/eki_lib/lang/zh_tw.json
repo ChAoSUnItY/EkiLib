@@ -19,7 +19,7 @@
   "eki_lib.screen.back": "返回",
   "eki_lib.screen.create_accept": "成功創建車站 ",
   "eki_lib.screen.bind.description": "綁定選擇的車站至主手持的車站綁定儀",
-  "eki_lib.screen.bind_accept": "成拱綁定雪則的車站至車站綁定儀",
+  "eki_lib.screen.bind_accept": "成拱綁定選擇的車站至車站綁定儀",
   "eki_lib.screen.bind.warning": "主手未持有車站綁定儀!",
   "eki_lib.container.ticket_vendor": "售票機",
   "eki_lib.message.invalid_item": "非法物品! 可能沒有包含所需的資訊以進行操作",

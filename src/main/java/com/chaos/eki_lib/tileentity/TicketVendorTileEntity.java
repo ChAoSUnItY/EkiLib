@@ -4,7 +4,7 @@ import com.chaos.eki_lib.api.EkiLibApi;
 import com.chaos.eki_lib.gui.container.TicketVendorContainer;
 import com.chaos.eki_lib.station.data.Station;
 import com.chaos.eki_lib.utils.handlers.TileEntityHandler;
-import com.chaos.eki_lib.utils.util.UtilDimensionConverter;
+import com.chaos.eki_lib.utils.util.UtilDimensionHelper;
 import com.chaos.eki_lib.utils.util.UtilStationConverter;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
@@ -74,7 +74,7 @@ public class TicketVendorTileEntity extends LockableLootTileEntity {
         if (!this.checkLootAndWrite(compound))
             ItemStackHelper.saveAllItems(compound, this.vendorContent);
         if (hasStationPos())
-            compound.putIntArray("stationPos", UtilStationConverter.toINTarray(this.stationPos));
+            compound.putIntArray("stationPos", UtilStationConverter.toIntegerArray(this.stationPos));
         return compound;
     }
 
@@ -91,7 +91,7 @@ public class TicketVendorTileEntity extends LockableLootTileEntity {
     }
 
     public Station getStation() {
-        return EkiLibApi.getStationByPosition(this.stationPos, UtilDimensionConverter.getDimensionID(this.world)).get();
+        return EkiLibApi.getStationByPosition(this.stationPos, UtilDimensionHelper.getDimension(this.world)).get();
     }
 
     public void setStationPos(@Nullable BlockPos stationPos) {

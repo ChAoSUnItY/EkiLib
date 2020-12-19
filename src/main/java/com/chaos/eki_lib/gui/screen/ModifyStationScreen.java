@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -26,14 +27,14 @@ public class ModifyStationScreen extends BaseScreen {
     private Optional<Station> station = Optional.empty();
     private BlockPos pos;
 
-    public ModifyStationScreen(Screen previous, int dimensionType, PlayerEntity player) {
-        super(new TranslationTextComponent("eki_lib.screen.modify_station"), previous, dimensionType, player);
+    public ModifyStationScreen(Screen previous, ResourceLocation dimension, PlayerEntity player) {
+        super(new TranslationTextComponent("eki_lib.screen.modify_station"), previous, dimension, player);
         this.stationLevel = EnumStationLevel.THRID;
         this.pos = player.getPosition();
     }
 
-    public ModifyStationScreen(Screen previous, int dimensionType, PlayerEntity player, Station station) {
-        this(previous, dimensionType, player);
+    public ModifyStationScreen(Screen previous, ResourceLocation dimension, PlayerEntity player, Station station) {
+        this(previous, dimension, player);
         this.station = Optional.of(station);
     }
 
@@ -50,7 +51,7 @@ public class ModifyStationScreen extends BaseScreen {
                 v -> minecraft.displayGuiScreen(this.previous)));
         this.buttonCreate = this.addButton(new Button(this.width / 2 + 10, this.height / 2 + 50, 100, 20, new TranslationTextComponent("eki_lib.screen.create_modify"),
                 v -> {
-                    Station station = new Station(this.textFieldStationName.getText(), this.pos, this.stationLevel, this.dimID);
+                    Station station = new Station(this.textFieldStationName.getText(), this.pos, this.stationLevel, this.dimension);
                     if (this.station.isPresent())
                         EkiLibApi.replaceStations(station);
                     else
@@ -75,7 +76,7 @@ public class ModifyStationScreen extends BaseScreen {
             this.textFieldStationName.setText(sta.getName());
             this.pos = sta.getPosition();
             this.stationLevel = sta.getLevel();
-            this.dimID = sta.getDimensionID();
+            this.dimension = sta.getDimension();
         });
 
         this.buttonRespond(this.textFieldStationName.getText());

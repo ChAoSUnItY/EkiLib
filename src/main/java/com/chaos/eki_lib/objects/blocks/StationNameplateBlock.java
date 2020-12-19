@@ -4,6 +4,7 @@ import com.chaos.eki_lib.objects.blocks.base.HorizontalBaseBlock;
 import com.chaos.eki_lib.objects.items.StationTunerItem;
 import com.chaos.eki_lib.tileentity.StationNameplateTileEntity;
 import com.chaos.eki_lib.utils.handlers.TileEntityHandler;
+import com.chaos.eki_lib.utils.util.UtilCastMagic;
 import com.chaos.eki_lib.utils.util.UtilStationConverter;
 import com.chaos.eki_lib.utils.util.voxel_shapes.HorizontalVoxelShapes;
 import net.minecraft.block.*;
@@ -83,7 +84,7 @@ public class StationNameplateBlock extends HorizontalBaseBlock {
             }
 
             CompoundNBT nbt = stack.getTag();
-            if (nbt.contains(UtilStationConverter.POSITION)) {
+            if (UtilCastMagic.castItem(StationTunerItem.class, stack.getItem()).getStation(nbt, worldIn).isPresent()) {
                 SNte.setStationPos(UtilStationConverter.toBlockPos(nbt, UtilStationConverter.POSITION));
                 player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.station_bind")
                         .append(new StringTextComponent(SNte.getStation().getName()).mergeStyle(TextFormatting.BOLD))

@@ -3,7 +3,7 @@ package com.chaos.eki_lib.tileentity;
 import com.chaos.eki_lib.api.EkiLibApi;
 import com.chaos.eki_lib.station.data.Station;
 import com.chaos.eki_lib.utils.handlers.TileEntityHandler;
-import com.chaos.eki_lib.utils.util.UtilDimensionConverter;
+import com.chaos.eki_lib.utils.util.UtilDimensionHelper;
 import com.chaos.eki_lib.utils.util.UtilStationConverter;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -30,7 +30,7 @@ public class TicketGateTileEntity extends TileEntity {
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
         if (hasStationPos())
-            compound.putIntArray("stationPos", UtilStationConverter.toINTarray(this.stationPos));
+            compound.putIntArray("stationPos", UtilStationConverter.toIntegerArray(this.stationPos));
         return super.write(compound);
     }
 
@@ -44,7 +44,7 @@ public class TicketGateTileEntity extends TileEntity {
     }
 
     public Station getStation() {
-        return EkiLibApi.getStationByPosition(this.stationPos, UtilDimensionConverter.getDimensionID(this.world)).get();
+        return EkiLibApi.getStationByPosition(this.stationPos, UtilDimensionHelper.getDimension(this.world)).get();
     }
 
     public void setStationPos(@Nullable BlockPos stationPos) {

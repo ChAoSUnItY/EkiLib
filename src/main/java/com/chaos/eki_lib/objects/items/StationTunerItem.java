@@ -1,11 +1,13 @@
 package com.chaos.eki_lib.objects.items;
 
 import com.chaos.eki_lib.api.EkiLibApi;
-import com.chaos.eki_lib.utils.util.UtilDimensionConverter;
+import com.chaos.eki_lib.station.data.Station;
+import com.chaos.eki_lib.utils.util.UtilDimensionHelper;
 import com.chaos.eki_lib.utils.util.UtilStationConverter;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -13,6 +15,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 public class StationTunerItem extends BaseItem {
     public StationTunerItem() {
@@ -21,7 +24,9 @@ public class StationTunerItem extends BaseItem {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        if (!stack.hasTag())
+        CompoundNBT compound = stack.getTag();
+        Optional<Station> station = getStation(compound, worldIn);
+        if (!station.isPresent())
             tooltip.add(new TranslationTextComponent(
                     getTranslationKey() + ".tooltip",
                     null,
@@ -29,16 +34,15 @@ public class StationTunerItem extends BaseItem {
                     null,
                     null
             ));
-        else if (stack.getTag().contains(UtilStationConverter.POSITION)) {
-            int[] bindStationPos = stack.getTag().getIntArray(UtilStationConverter.POSITION);
+        else {
             tooltip.add(new TranslationTextComponent(
                     getTranslationKey() + ".tooltip",
                     spreadArgs(
                             EkiLibApi.getStationByPosition(
-                                    UtilStationConverter.toBlockPos(stack.getTag().getIntArray(UtilStationConverter.POSITION)),
-                                    UtilDimensionConverter.getDimensionID(worldIn)
+                                    UtilStationConverter.toBlockPos(compound.getIntArray(UtilStationConverter.POSITION)),
+                                    UtilDimensionHelper.getDimension(worldIn)
                             ).get().getName(),
-                            stack.getTag().getIntArray(UtilStationConverter.POSITION)
+                            compound.getIntArray(UtilStationConverter.POSITION)
                     )
             ).mergeStyle(TextFormatting.GRAY));
         }
@@ -50,5 +54,14 @@ public class StationTunerItem extends BaseItem {
         for (int i = 1; i < 4; i++)
             objArr[i] = ((int[]) obj[1])[i - 1];
         return objArr;
+    }
+
+    public Optional<Station> getStation(CompoundNBT compound, World world) {
+        if (compound == null || !compound.contains(UtilStationConverter.POSITION))
+            return Optional.empty();
+        return EkiLibApi.getStationByPosition(
+                UtilStationConverter.toBlockPos(compound.getIntArray(UtilStationConverter.POSITION)),
+                UtilDimensionHelper.getDimension(world)
+        );
     }
 }
