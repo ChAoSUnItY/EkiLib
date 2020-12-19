@@ -4,10 +4,12 @@ import com.chaos.eki_lib.api.EkiLibApi;
 import com.chaos.eki_lib.objects.blocks.base.HorizontalBaseBlock;
 import com.chaos.eki_lib.objects.items.StationTunerItem;
 import com.chaos.eki_lib.objects.items.TicketItem;
+import com.chaos.eki_lib.station.data.Station;
 import com.chaos.eki_lib.tileentity.TicketGateTileEntity;
 import com.chaos.eki_lib.utils.handlers.RegistryHandler;
 import com.chaos.eki_lib.utils.handlers.TileEntityHandler;
-import com.chaos.eki_lib.utils.util.UtilDimensionConverter;
+import com.chaos.eki_lib.utils.util.UtilCastMagic;
+import com.chaos.eki_lib.utils.util.UtilDimensionHelper;
 import com.chaos.eki_lib.utils.util.UtilDistanceHelper;
 import com.chaos.eki_lib.utils.util.UtilStationConverter;
 import com.chaos.eki_lib.utils.util.voxel_shapes.HorizontalVoxelShapes;
@@ -539,7 +541,7 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                 }
 
                 CompoundNBT nbt = stack.getTag();
-                if (nbt.contains(UtilStationConverter.POSITION)) {
+                if (UtilCastMagic.castItem(StationTunerItem.class, stack.getItem()).getStation(nbt, worldIn).isPresent() && nbt.contains(UtilStationConverter.POSITION)) {
                     TGte.setStationPos(UtilStationConverter.toBlockPos(nbt, UtilStationConverter.POSITION));
                     TGte.markDirty();
                     player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.station_bind")
@@ -589,9 +591,9 @@ public class TicketGateBlock extends HorizontalBaseBlock {
                                 player.sendStatusMessage(new TranslationTextComponent("eki_lib.message.balance_shortage", requiredPrice, value), true);
                             }
                         } else {
-                            nbt.putIntArray("startPos", UtilStationConverter.toINTarray(TGte.hasStationPos() ? TGte.getStationPos() : pos));
+                            nbt.putIntArray("startPos", UtilStationConverter.toIntegerArray(TGte.hasStationPos() ? TGte.getStationPos() : pos));
                             if (TGte.hasStationPos())
-                                nbt.putString("fromStation", EkiLibApi.getStationByPosition(TGte.getStationPos(), UtilDimensionConverter.getDimensionID(worldIn)).get().getName());
+                                nbt.putString("fromStation", EkiLibApi.getStationByPosition(TGte.getStationPos(), UtilDimensionHelper.getDimension(worldIn)).orElse(Station.DUMMY).getName());
                             if (ticket.getType() == 2) {
                                 stack.setTag(nbt);
                             } else {

@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "i i",
+    "CIR",
+    "VHi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "minecraft:comparator"
+    },
+    "I": {
+      "item": "minecraft:iron_trapdoor"
+    },
+    "R": {
+      "item": "minecraft:repeater"
+    },
+    "V": {
+      "item": "minecraft:redstone"
+    },
+    "H": {
+      "item": "minecraft:heavy_weighted_pressure_plate"
+    }
+  },
+  "result": {
+    "item": "eki_lib:ticket_gate",
+    "count": 1
+  }
+}

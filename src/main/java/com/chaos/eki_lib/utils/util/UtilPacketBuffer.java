@@ -9,13 +9,13 @@ public class UtilPacketBuffer {
         buf.writeString(station.getName(), 100);
         buf.writeBlockPos(station.getPosition());
         buf.writeEnumValue(station.getLevel());
-        buf.writeVarInt(station.getDimensionID());
+        buf.writeResourceLocation(station.getDimension());
     }
 
     public static Station decodeStation(PacketBuffer buf) {
         return new Station(buf.readString(100),
                 buf.readBlockPos(),
                 buf.readEnumValue(EnumStationLevel.class),
-                buf.readVarInt());
+                buf.readResourceLocation());
     }
 }

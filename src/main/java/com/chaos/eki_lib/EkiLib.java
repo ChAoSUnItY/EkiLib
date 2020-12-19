@@ -35,8 +35,6 @@ public class EkiLib {
         ContainerHandler.CONTAINER_TYPES.register(bus);
 
         bus.addListener(this::setup);
-        bus.addListener(this::enqueueIMC);
-        bus.addListener(this::processIMC);
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(this::onWorldLoaded);
@@ -49,13 +47,6 @@ public class EkiLib {
     private void setup(final FMLCommonSetupEvent event) {
         PacketHandler.init();
     }
-
-    private void enqueueIMC(final InterModEnqueueEvent event) {
-    }
-
-    private void processIMC(final InterModProcessEvent event) {
-    }
-
     public void onWorldLoaded(WorldEvent.Load event) {
         if (!event.getWorld().isRemote() && event.getWorld() instanceof ServerWorld) {
             StationWorldData saver = StationWorldData.forWorld((ServerWorld) event.getWorld());

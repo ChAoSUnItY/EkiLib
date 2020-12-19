@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "QQQ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:black_concrete"
+    },
+    "Q": {
+      "item": "minecraft:quartz_block"
+    }
+  },
+  "result": {
+    "item": "eki_lib:station_nameplate",
+    "count": 1
+  }
+}

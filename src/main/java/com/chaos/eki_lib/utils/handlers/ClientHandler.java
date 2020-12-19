@@ -4,7 +4,7 @@ import com.chaos.eki_lib.EkiLib;
 import com.chaos.eki_lib.gui.screen.StationSelectionScreen;
 import com.chaos.eki_lib.gui.screen.TicketVendorScreen;
 import com.chaos.eki_lib.tileentity.renderer.StationNameplateTER;
-import com.chaos.eki_lib.utils.util.UtilDimensionConverter;
+import com.chaos.eki_lib.utils.util.UtilDimensionHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
@@ -47,7 +47,7 @@ public class ClientHandler {
             mc.displayGuiScreen(
                     new StationSelectionScreen(
                             null,
-                            UtilDimensionConverter.dimensionKeyToID(mc.world.getDimension()).getAsInt(),
+                            UtilDimensionHelper.getDimension(mc.world),
                             mc.getConnection().getWorld().getPlayerByUuid(mc.player.getUniqueID())));
         }
     }

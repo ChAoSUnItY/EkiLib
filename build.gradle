@@ -12,7 +12,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0.17-1.15'
+version = '1.0.18-1.15'
 group = 'com.chaos.eki_lib'
 archivesBaseName = 'EkiLib'
 

@@ -5,7 +5,6 @@ import com.chaos.eki_lib.gui.container.TicketVendorContainer;
 import com.chaos.eki_lib.tileentity.TicketVendorTileEntity;
 import com.chaos.eki_lib.utils.handlers.PacketHandler;
 import com.chaos.eki_lib.utils.network.PacketVendorSpawnTicket;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;

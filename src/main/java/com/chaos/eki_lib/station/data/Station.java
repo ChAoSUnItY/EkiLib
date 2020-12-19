@@ -1,18 +1,23 @@
 package com.chaos.eki_lib.station.data;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
 public class Station {
+    public static final Station DUMMY = new Station("", new BlockPos(-1, -1, -1), EnumStationLevel.NON, DimensionType.OVERWORLD.getRegistryName());
+
     protected String name;
     protected BlockPos position;
     protected EnumStationLevel level;
-    protected int dimensionID;
+    protected ResourceLocation dimension;
 
-    public Station(String name, BlockPos pos, EnumStationLevel lvl, int dimensionID) {
+    public Station(String name, BlockPos pos, EnumStationLevel lvl, ResourceLocation dimension) {
         this.name = name;
         this.position = pos;
         this.level = lvl;
-        this.dimensionID = dimensionID;
+        this.dimension = dimension;
     }
 
     public String getName() {
@@ -39,8 +44,8 @@ public class Station {
         this.level = level;
     }
 
-    public int getDimensionID() {
-        return dimensionID;
+    public ResourceLocation getDimension() {
+        return dimension;
     }
 
     public boolean hasNull() {

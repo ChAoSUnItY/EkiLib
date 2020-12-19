@@ -16,8 +16,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class RegistryHandler {
     public static final Item.Properties DEFAULT_ITEM_BLOCK_PROPERTIES = new Item.Properties().group(EkiLib.EkiLibGroup);
 
-    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, EkiLib.MODID);
-    public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, EkiLib.MODID);
+    public static final DeferredRegister<Item> ITEMS = new DeferredRegister(ForgeRegistries.ITEMS, EkiLib.MODID);
+    public static final DeferredRegister<Block> BLOCKS = new DeferredRegister(ForgeRegistries.BLOCKS, EkiLib.MODID);
 
     // ITEMS
     public static final RegistryObject<StationTunerItem> STATION_TUNER = ITEMS.register("station_tuner", StationTunerItem::new);

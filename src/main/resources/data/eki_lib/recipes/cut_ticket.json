@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "eki_lib:ticket"
+    },
+    {
+      "item": "minecraft:shears"
+    }
+  ],
+  "result": {
+    "item": "eki_lib:cut_ticket",
+    "count": 1
+  }
+}

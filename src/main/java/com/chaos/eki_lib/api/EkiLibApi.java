@@ -2,6 +2,7 @@ package com.chaos.eki_lib.api;
 
 import com.chaos.eki_lib.station.data.Station;
 import com.chaos.eki_lib.utils.handlers.StationHandler;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public class EkiLibApi {
         return StationHandler.INSTANCE.has(pos);
     }
 
-    public static Optional<Station> getStationByPosition(BlockPos pos, int dimID) {
-        return StationHandler.INSTANCE.getStations().stream().filter(station -> station.getPosition().equals(pos) && station.getDimensionID() == dimID).findFirst();
+    public static Optional<Station> getStationByPosition(BlockPos pos, ResourceLocation dimension) {
+        return StationHandler.INSTANCE.getStations().stream().filter(station -> station.getPosition().equals(pos) && station.getDimension().equals(dimension)).findFirst();
     }
 
     public static void addStations(Station... stations) {
@@ -36,13 +37,13 @@ public class EkiLibApi {
         return deleteProcess(sta -> StationHandler.INSTANCE.removeStationByName(sta.getName(), sensitive) ? 1 : 0, stations);
     }
 
-    public static boolean deleteStationsByPosition(Station... stations) {
-        return deleteProcess(sta -> StationHandler.INSTANCE.removeStationByPos(sta.getPosition()) ? 1 : 0, stations);
+    public static void deleteStationsByPosition(Station... stations) {
+        deleteProcess(sta -> StationHandler.INSTANCE.removeStationByPos(sta.getPosition()) ? 1 : 0, stations);
     }
 
-    public static List<Station> getStationList(int dimensionID) {
+    public static List<Station> getStationList(ResourceLocation dimension) {
         return StationHandler.INSTANCE.getStations().stream()
-                .filter(station -> station.getDimensionID() == dimensionID)
+                .filter(station -> station.getDimension().equals(dimension))
                 .collect(Collectors.toList());
     }
 
