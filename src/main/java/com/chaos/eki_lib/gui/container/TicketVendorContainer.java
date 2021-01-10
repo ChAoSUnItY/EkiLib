@@ -18,7 +18,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Objects;
 
-@OnlyIn(Dist.CLIENT)
 public class TicketVendorContainer extends Container {
     private final TicketVendorSlot slot;
     private final TicketVendorTileEntity TVte;
@@ -104,7 +103,6 @@ public class TicketVendorContainer extends Container {
         return isWithinUsableDistance(IWorldPosCallable.DUMMY, playerIn, RegistryHandler.TICKET_VENDOR.get());
     }
 
-    @OnlyIn(Dist.CLIENT)
     public class TicketVendorSlot extends Slot {
         public TicketVendorSlot(IInventory inv, int index, int x, int y) {
             super(inv, index, x, y);
