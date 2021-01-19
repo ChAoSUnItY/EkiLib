@@ -1,14 +1,13 @@
 modLoader="javafml"
 loaderVersion="[34,)"
 license="MIT"
-issueTrackerURL="https://github.com/ChAoSUnItY/EkiLib/issues"
+issueTrackerURL="https://github.com/ChAoSUnItY/EkiLib/issues/"
 
 [[mods]]
 modId="eki_lib"
-version="1.0.19"
+version="1.0.20"
 displayName="Eki Lib"
-updateJSONURL=""
-displayURL="https://github.com/ChAoSUnItY/EkiLib"
+displayURL="https://github.com/ChAoSUnItY/EkiLib/"
 logoFile="Eki_Lib_Logo.png"
 credits=""
 authors="ChAoS_UnItY"
